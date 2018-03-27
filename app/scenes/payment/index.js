@@ -278,7 +278,7 @@ class PaymentScreen extends Component{
                                         <Text style={styles.paymentText}>{card.number}</Text>
                                     </Body>
                                     <Right>
-                                        <Radio selected={(this.state.paymentmethod == index)}/>
+                                        <Radio onPress={() => this.onPaymentMethod(index)} selected={(this.state.paymentmethod == index)}/>
                                     </Right>
                                 </ListItem>
                             );
@@ -300,7 +300,7 @@ class PaymentScreen extends Component{
                         <Text style={styles.footerPriceText}>${this.props.navigation.state.params.feed.discounted_cost.toFixed(2)}</Text>
                         <Text style={styles.footerLineText}>for {this.state.lines} lines</Text>
                     </View>
-                    <Button style={styles.payBtn} onPress={() => this.onPay()}>
+                    <Button style={this.props.user.creditcards && this.props.user.creditcards[0] != undefined ?styles.payBtn:styles.payBtnDisable} onPress={() => this.onPay()} disabled={this.props.user.creditcards && this.props.user.creditcards[0] != undefined ?false:true} >
                         <Label style={styles.payBtnText}>Pay</Label>
                     </Button>
                 </Footer>

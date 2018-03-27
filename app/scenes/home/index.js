@@ -155,13 +155,13 @@ class HomeScreen extends Component{
                                     </Text>
                                 </Button>
                             </Col>
-                            <Col style={styles.tabItemContainer}>
+                            {/* <Col style={styles.tabItemContainer}>
                                 <Button onPress={() => this.onSelectedTab(2)} transparent style={[styles.tabItem, (this.state.selectedTab == 2) && styles.tabActiveItem]}>
                                     <Text style={[styles.tabItemText, (this.state.selectedTab == 2) && styles.tabItemActiveText]}>
                                         WHAT'S NEW
                                     </Text>
                                 </Button>
-                            </Col>
+                            </Col> */}
                         </Grid>
                     </Body>
                 </Header>

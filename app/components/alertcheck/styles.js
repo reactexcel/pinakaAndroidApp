@@ -66,7 +66,8 @@ export default {
         alignItems: 'space-between',
         justifyContent: 'center',
         marginTop: 5,
-        marginRight: -15
+        marginRight: -15,
+        marginBottom: 30,
     },
 
     btnText: {

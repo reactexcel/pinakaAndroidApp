@@ -63,11 +63,9 @@ class WelcomeScreen extends Component{
           if(result !== null ){
             this.setState({isLoading:true});
             const user = JSON.parse(result);
-            console.log(user,'AsyncStorage');
             if(user.user == 'logout'){
               this.setState({isLoading:false});
             } else if(user.loginType == 'login'){
-              console.log(user,'login');
               dispatch({type: 'setprofile', data: user.data});
               dispatch(NavigationActions.navigate({routeName: 'tab'}));
             }

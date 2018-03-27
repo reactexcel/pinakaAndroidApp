@@ -223,7 +223,7 @@ class DetailScreen extends Component{
                             </Body>
                         </ListItem>
                     </List>
-                    <MapView
+                    {/* <MapView
                         style={styles.mapview}
                         scrollEnabled={false}
                             initialRegion={{
@@ -242,7 +242,7 @@ class DetailScreen extends Component{
                             strokeColor="rgb(230,54,166)"
                             fillColor="rgba(230,54,166,0.24)"
                         />
-                    </MapView>
+                    </MapView> */}
                 </Content>
                 <Footer style={styles.footer}>
                     <Button style={styles.bookBtn} onPress={() => this.onReserve()}>

@@ -63,22 +63,22 @@ class SettingScreen extends Component{
                 </Header>
                 <Content style={styles.content}>
                     <List>
-                        <ListItem style={styles.listItem}>
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.listItemText}>Notifications</Text>
                             </Body>
                             <Right>
                                 <Switch value={this.state.notification} onValueChange={(value) => this.onValueChange(value)}/>
                             </Right>
-                        </ListItem>
-                        <ListItem style={styles.listItem}>
+                        </ListItem> */}
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.listItemText}>Currency</Text>
                             </Body>
                             <Right>
                                 <Text style={styles.currencyText}>USD($)</Text>
                             </Right>
-                        </ListItem>
+                        </ListItem> */}
                         <ListItem style={styles.listItem} onPress={() => this.onChangePassword()}>
                             <Body>
                                 <Text style={styles.listItemText}>Change Password</Text>
@@ -87,14 +87,14 @@ class SettingScreen extends Component{
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
                         </ListItem>
-                        <ListItem style={styles.listItem}>
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.listItemText}>About Us</Text>
                             </Body>
                             <Right>
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
-                        </ListItem>
+                        </ListItem> */}
                         <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.listItemText}>Terms of Service</Text>
@@ -103,11 +103,11 @@ class SettingScreen extends Component{
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
                         </ListItem>
-                        <ListItem style={styles.listItem}>
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.listItemText}>Version 1.2.3</Text>
                             </Body>
-                        </ListItem>
+                        </ListItem> */}
                         <ListItem style={styles.listItem} onPress={() => this.onLogout()}>
                             <Body>
                                 <Text style={styles.listItemText}>Log Out</Text>

@@ -126,7 +126,7 @@ class ProfileScreen extends Component{
                         />
                     }>
                     <Body>
-                        <Thumbnail source={require('../../assets/1.png')} style={styles.image}/>
+                        <Thumbnail source={require('../../assets/profile.png')} style={styles.image}/>
                         <Text style={styles.basicText}>{this.props.user.name}, {this.showAge()}</Text>
                         <Text style={styles.locationText}>Berlin, Germany</Text>
                     </Body>
@@ -139,13 +139,13 @@ class ProfileScreen extends Component{
                         {this.showInterest()}
                     </Text>: null}
                     <View style={styles.divider}/>
-                    <Text style={styles.verifyText}>
+                    {/* <Text style={styles.verifyText}>
                         Verified Info
                     </Text>
                     <Text style={styles.interestText1}>
                         {this.showVerifiedInfo()}
-                    </Text>
-                    <View style={styles.divider}/>
+                    </Text> */}
+                    {/* <View style={styles.divider}/> */}
                     <List style={styles.list}>
                         <ListItem style={styles.listItem} onPress={() => this.onList()}>
                             <Body>

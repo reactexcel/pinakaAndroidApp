@@ -207,6 +207,15 @@ export default {
         justifyContent: 'center'
     },
 
+    payBtnDisable: {
+        width: 156,
+        height: 48,
+        backgroundColor: 'grey',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
     payBtnText: {
         fontSize: 18,
         fontFamily: 'Roboto',
