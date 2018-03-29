@@ -26,7 +26,7 @@ import { StatusBar, Dimensions, AsyncStorage } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
-import { emailSignup } from '../../actions/';
+import { facebookSignup } from '../../actions/';
 import PLoading from '../../components/loading';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
@@ -43,6 +43,7 @@ class FacebookSignupScreen extends Component{
             progress: 1,
             hidePass: true,
             gender: true,
+            id:'',
             marital: false,
             kids: false,
             email: "",
@@ -52,14 +53,22 @@ class FacebookSignupScreen extends Component{
             showDatePicker: false,
             isError: false,
             errorText: "",
-            isLoading: false
+            isLoading: false,
+            name:''
         }
     }
 
     componentWillMount(){
       const { user } = this.props.navigation.state.params;
       console.log(user,'facebookpage');
-      this.setState({email:user.email,password:user.id});
+      this.setState({
+          email:user.email,
+          password:user.id,
+          birthday:new Date(user.birthday),
+          gender:user.gender == 'male' ? false : true,
+          name:user.username,
+          id:user.id
+        });
     }
 
     onBack(){
@@ -102,6 +111,8 @@ class FacebookSignupScreen extends Component{
 
                 var { dispatch } = this.props;
                 var params = {
+                    name:this.state.name,
+                    id:this.state.id,
                     email: this.state.email,
                     birthday: this.state.birthday,
                     zipcode: this.state.zipcode,
@@ -111,7 +122,7 @@ class FacebookSignupScreen extends Component{
                     password: this.state.password,
                     interests: this.props.navigation.state.params.interest
                 };
-                emailSignup(params)
+                facebookSignup(params)
                 .then(data => {
                     //hide indicator
 
@@ -272,7 +283,7 @@ class FacebookSignupScreen extends Component{
                                         date={this.state.birthday}
                                         mode="date"
                                         placeholder="Select your birthday"
-                                        format="YYYY-MM-DD"
+                                        format="MM-DD"
                                         confirmBtnText="Done"
                                         cancelBtnText="Cancel"
                                         onDateChange={(date) => this.setState({birthday: date})}

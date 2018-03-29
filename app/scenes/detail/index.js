@@ -191,37 +191,37 @@ class DetailScreen extends Component{
                                 </Text>
                             </Body>
                         </ListItem>
-                        <ListItem style={styles.listItem}>
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.btnText}>Reviews</Text>
                             </Body>
                             <Right>
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
-                        </ListItem>
-                        <ListItem style={styles.listItem} onPress={() => this.onSchedule()}>
+                        </ListItem> */}
+                        {/* <ListItem style={styles.listItem} onPress={() => this.onSchedule()}>
                             <Body>
                                 <Text style={styles.btnText}>View Schedule</Text>
                             </Body>
                             <Right>
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
-                        </ListItem>
-                        <ListItem style={styles.listItem}>
+                        </ListItem> */}
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.btnText}>Company Website</Text>
                             </Body>
                             <Right>
                                 <Icon name="ios-arrow-forward"/>
                             </Right>
-                        </ListItem>
-                        <ListItem style={styles.listItem}>
+                        </ListItem> */}
+                        {/* <ListItem style={styles.listItem}>
                             <Body>
                                 <Text style={styles.locationText}>
                                     <Icon name="md-pin" style={styles.pinIcon}/>  Boronia St & Anzac Parade, NSW 2033
                                 </Text>
                             </Body>
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                     {/* <MapView
                         style={styles.mapview}

@@ -15,7 +15,7 @@ export default {
     },
 
     logo: {
-        width: 142,
+        width: 162,
         height: 142
     }
 }
