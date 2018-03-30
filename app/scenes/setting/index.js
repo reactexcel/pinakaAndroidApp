@@ -41,7 +41,8 @@ class SettingScreen extends Component{
     }
 
     onChangePassword(){
-
+        var { dispatch } = this.props;
+        dispatch(NavigationActions.navigate({routeName: 'changepassword',params:{type:'user'}}));
     }
 
     onLogout(){
@@ -53,6 +54,7 @@ class SettingScreen extends Component{
     }
 
     render(){
+        console.log(this.props,'check email')
         StatusBar.setBarStyle('light-content');
         return (
             <Container style={styles.container}>

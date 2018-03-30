@@ -285,13 +285,16 @@ function updateProfile(token, params){
     });
 }
 
-function changePassword(token, password){
+function changePassword(email, password, new_password){
     var formData = new FormData();
     formData.append('password', password);
-    formData.append('token', token);
+    formData.append('email', email);
+    formData.append('new_password', new_password);
+    // formData.append('token', token);
+    
 
     return new Promise((resolve, reject) => {
-        fetch(API.SERVER_DEV_URL + 'user/update', {
+        fetch(API.SERVER_DEV_URL + 'user/change_password', {
             method: 'PUT',
             headers: {
                 'Content-Type':'multipart/form-data'
