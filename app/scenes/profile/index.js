@@ -20,7 +20,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar,RefreshControl } from 'react-native';
+import { StatusBar,RefreshControl, AsyncStorage } from 'react-native';
 import { API } from '../../constants/api';
 import { getProfile } from '../../actions';
 
@@ -43,6 +43,7 @@ class ProfileScreen extends Component{
         getProfile(user.token)
         .then(data => {
             dispatch({type: 'setprofile', data: data});
+            AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));            
             this.setState({
                 refreshing: false
             })

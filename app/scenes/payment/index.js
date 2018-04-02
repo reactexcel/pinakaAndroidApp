@@ -85,11 +85,30 @@ class PaymentScreen extends Component{
     }
 
     onPay(){
-        if(this.props.user.creditcards.length > 0){
+        if(this.props.user.creditcards && this.props.user.creditcards[0]!= undefined){
             //show Indicator
             this.setState({
                 isLoading: true
             });
+            if(this.state.reservationDate == '' && this.state.reservationTime == ''){
+                this.setState({
+                    isLoading: false,
+                    isError: true,
+                    errorText: "Please Enter Reservation Date & Time"
+                });
+            }else if(this.state.reservationTime == '' ){
+                this.setState({
+                    isLoading: false,
+                    isError: true,
+                    errorText: "Please Enter Reservation Time"
+                });
+            } else if (this.state.reservationDate == '') {
+                this.setState({
+                    isLoading: false,
+                    isError: true,
+                    errorText: "Please Enter Reservation Date"
+                });
+            } else {
             var cardDetails =  {
                 number: this.props.user.creditcards[this.state.paymentmethod].number,
                 expired_m: this.props.user.creditcards[this.state.paymentmethod].expired_m,
@@ -112,13 +131,12 @@ class PaymentScreen extends Component{
                 expired_y: this.props.user.creditcards[this.state.paymentmethod].expired_y
             };
 
-
+                
 
             createCardToken(cardDetails).then(data => {
               console.log(data,'card data');
               const paymentData = {data:data,amount:this.props.navigation.state.params.feed.discounted_cost,currency:'USD',description:'payment'}
               cardPay(paymentData).then(response => {
-                console.log(response,'payment data');
                 if(response.error === 0){
                 createReservation(token, params)
                 .then(data => {
@@ -126,14 +144,19 @@ class PaymentScreen extends Component{
                         switch(data.code){
                             case API.RESPONSE.RESERVATION.INVALIDCARDINFO:
                                 this.setState({
+                                    isLoading:false,
                                     isError: true,
                                     errorText: "Invalid Credit Card Information. Please try again."
                                 });
                                 break;
+                            case API.RESPONSE.RESERVATION.INVALIDBOOKINGTIME:
+                                this.setState({
+                                    isLoading:false,
+                                    isError: true,
+                                    errorText: "Please enter correct date and time."
+                                });
+                                break;
                         }
-                        this.setState({
-                            isLoading: false
-                        });
                     }else{
                         this.setState({
                             isLoading: false
@@ -152,7 +175,6 @@ class PaymentScreen extends Component{
                     });
                 });
               } else {
-                console.log(response,'failed payment');
                 this.setState({
                     isError: true,
                     isLoading:false,
@@ -163,9 +185,7 @@ class PaymentScreen extends Component{
               });
             });
 
-            console.log(params);
-
-
+            }
         }else{
             this.setState({
                 isError: true,
@@ -173,6 +193,7 @@ class PaymentScreen extends Component{
             });
             Alert.alert('Error',"Please select a credit card to pay");
         }
+        
     }
 
     showDate(){
@@ -187,7 +208,6 @@ class PaymentScreen extends Component{
     }
 
     render (){
-        console.log(this.state,'asdasddasd')
         StatusBar.setBarStyle('light-content');
         return (
             <Container style={styles.container}>
@@ -202,6 +222,8 @@ class PaymentScreen extends Component{
                     </Body>
                     <Right></Right>
                 </Header>
+                {this.state.isError?
+                <EDialog errorText={this.state.errorText} onClose={() => this.onErrorClose()}/>: null}
                 <Content style={styles.content}>
                     <Grid>
                         <Col style={styles.basicContainer}>
@@ -234,7 +256,8 @@ class PaymentScreen extends Component{
                                 fontFamily: 'Roboto',
                                 fontWeight: 'normal',
                                 fontSize: 16,
-                                lineHeight: 33
+                                lineHeight: 33,
+                                color:'#e636a6'
                             }
                         }}
                     />
@@ -246,6 +269,7 @@ class PaymentScreen extends Component{
                         mode="date"
                         placeholder="Select Reservation Time"
                         mode="time"
+                        is24Hour
                         confirmBtnText="Done"
                         cancelBtnText="Cancel"
                         onDateChange={(date) => this.setState({reservationTime: date})}
@@ -256,19 +280,21 @@ class PaymentScreen extends Component{
                                 fontFamily: 'Roboto',
                                 fontWeight: 'normal',
                                 fontSize: 16,
-                                lineHeight: 33
+                                lineHeight: 33,
+                                color:'#e636a6'
+                                
                             }
                         }}
                     />
                     </View>
-                    {this.props.navigation.state.params.hours[0]?
+                    {/* {this.props.navigation.state.params.hours[0]?
                     <Text style={styles.timeText}>{API.BOOKINGTIME[0]}</Text>: null}
                     {this.props.navigation.state.params.hours[1]?
                         <Text style={styles.timeText}>{API.BOOKINGTIME[1]}</Text>: null}
                     {this.props.navigation.state.params.hours[2]?
                     <Text style={styles.timeText}>{API.BOOKINGTIME[2]}</Text>: null}
                     {this.props.navigation.state.params.hours[3]?
-                    <Text style={styles.timeText}>{API.BOOKINGTIME[3]}</Text>: null}
+                    <Text style={styles.timeText}>{API.BOOKINGTIME[3]}</Text>: null} */}
                     <List style={styles.list}>
                         <ListItem style={styles.listItem}>
                             <Body>

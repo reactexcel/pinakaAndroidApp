@@ -26,7 +26,7 @@ import { StatusBar, Dimensions, AsyncStorage, Keyboard } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
-import { changePassword } from '../../actions/';
+import { changePassword, getProfile } from '../../actions/';
 import PLoading from '../../components/loading';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
@@ -81,7 +81,7 @@ class ChangePassword extends Component{
 
     onSubmit(){
         Keyboard.dismiss();
-        var { dispatch } = this.props;        
+        var { dispatch, user } = this.props;        
         if(this.state.oldPassword == ''||this.state.newPassword == '' || this.state.password == ''){
             let text = 
             this.state.password == '' && this.state.newPassword == '' && this.state.oldPassword == '' ? 'Please Enter All Fields'
@@ -118,6 +118,15 @@ class ChangePassword extends Component{
                             break;
                     }
                 } else {
+                    
+                    getProfile(user.token)
+                    .then(data => {
+                        dispatch({type: 'setprofile', data: data});
+                        AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                    })
+                    .catch(err => {
+                        console.log('error')
+                    });
                     if(this.props.navigation.state.params != undefined && this.props.navigation.state.params.type=='temp'){
                         dispatch(NavigationActions.navigate({routeName: 'tab'}));            
                     } else {
@@ -253,4 +262,9 @@ class ChangePassword extends Component{
     }
 }
 
-export default connect()(ChangePassword);
+const mapStateToProps = state => ({
+    ...state,
+    user: state.user
+})
+
+export default connect(mapStateToProps)(ChangePassword);

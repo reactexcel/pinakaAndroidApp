@@ -108,6 +108,7 @@ class EmailSignupScreen extends Component{
                     gender: this.state.gender,
                     marital: this.state.marital,
                     kids: this.state.kids,
+                    password: this.state.password,
                     interests: this.props.navigation.state.params.interest
                 };
                 Keyboard.dismiss();

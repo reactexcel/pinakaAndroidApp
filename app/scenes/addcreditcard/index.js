@@ -25,10 +25,10 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, ScrollView } from 'react-native';
+import { StatusBar, ScrollView, AsyncStorage } from 'react-native';
 import moment from 'moment';
 import { API } from '../../constants/api';
-import { saveCard, addCard, createCardToken, cardPay } from '../../actions';
+import { saveCard, addCard, createCardToken, cardPay, getProfile } from '../../actions';
 import PLoading from '../../components/loading';
 import EDialog from '../../components/edialog'
 
@@ -198,6 +198,15 @@ class AddCreditCardScreen extends Component{
                                 this.setState({
                                     isLoading: false
                                 });
+                                
+                                getProfile(user.token)
+                                .then(data => {
+                                    dispatch({type: 'setprofile', data: data});
+                                    AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                                })
+                                .catch(err => {
+                                    console.log('error')
+                                });
                                 dispatch(NavigationActions.back());
                             }
                         })
@@ -262,6 +271,14 @@ class AddCreditCardScreen extends Component{
 
                                 this.setState({
                                     isLoading: false
+                                });
+                                getProfile(user.token)
+                                .then(data => {
+                                    dispatch({type: 'setprofile', data: data});
+                                    AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                                })
+                                .catch(err => {
+                                    console.log('error')
                                 });
                                 dispatch(NavigationActions.back());
                             }

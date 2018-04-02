@@ -63,9 +63,7 @@ function emailSignup(params){
     formData.append('gender', params.gender?1:0);
     formData.append('marital', params.marital?1:0);
     formData.append('kids', params.kids?1:0);
-    if(params.phone != undefined){
-        formData.append('phone', params.phone);
-    }
+    formData.append("phone", params.phone != undefined ?  params.phone: "");
     formData.append('interests', params.interests);
     formData.append('source', 0);
     formData.append('type', 0);
