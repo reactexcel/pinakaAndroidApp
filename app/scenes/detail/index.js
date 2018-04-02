@@ -71,17 +71,19 @@ class DetailScreen extends Component{
         // });
 
         var { token, dispatch } = this.props;
+        var listfeed = this.state.feed;
         if(this.state.feed.isSaved == null){
+            listfeed.isSaved = listfeed._id;
+            this.setState({feed:listfeed});    
             savedFeed(token, this.state.feed._id)
             .then(data => {
-                this.state.feed.isSaved = data.id;
                 //refresh store
                 var feedlist = this.props.feedlist && this.props.feedlist != undefined ? this.props.feedlist : null;
                 for(var i = 0; i < feedlist.length; i++){
                     if(feedlist[i]._id == this.state.feed._id){
                         feedlist[i].isSaved = data.id
                     }
-                };
+                };  
                 dispatch({type: 'setfeed', data: []});
                 dispatch({type: 'setfeed', data: feedlist});
 
@@ -104,9 +106,10 @@ class DetailScreen extends Component{
                 // });
             });
         }else{
+            listfeed.isSaved = null;
+            this.setState({feed:listfeed});           
             unSavedFeed(token, this.state.feed.isSaved)
             .then(data => {
-                this.state.feed.isSaved = null;
                 //refresh store
                 var feedlist = this.props.feedlist && this.props.feedlist != undefined ? this.props.feedlist : null;
                 for(var i = 0; i < feedlist.length; i++){
@@ -143,6 +146,7 @@ class DetailScreen extends Component{
 
 
     render(){
+        console.log(this.state,'check details')
         StatusBar.setBarStyle('light-content');
         return (
             <Container style={styles.container}>

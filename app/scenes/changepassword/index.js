@@ -71,7 +71,6 @@ class ChangePassword extends Component{
         // }else{
         
         var { dispatch } = this.props;
-        console.log(this.props,'props check on back button')
         if(this.props.navigation.state.params != undefined && this.props.navigation.state.params.type=='temp'){
             dispatch(NavigationActions.navigate({routeName: 'tab'}));            
         } else {
