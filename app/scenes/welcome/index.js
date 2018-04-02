@@ -15,7 +15,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, BackHandler, BackAndroid, AsyncStorage } from 'react-native';
+import { StatusBar, BackHandler, BackAndroid, AsyncStorage, Keyboard} from 'react-native';
 import AlertCheck from '../../components/alertcheck/';
 import PLoading from '../../components/loading';
 import { getInterests, emailLogin } from '../../actions';
@@ -58,6 +58,7 @@ class WelcomeScreen extends Component{
     //         dispatch({ type: 'Navigation/BACK' });
     //         return true;
     //     });
+    Keyboard.dismiss();    
         var { dispatch } = this.props;
         AsyncStorage.getItem('user', (err, result) => {
           if(result !== null ){
@@ -67,7 +68,11 @@ class WelcomeScreen extends Component{
               this.setState({isLoading:false});
             } else if(user.loginType == 'login'){
               dispatch({type: 'setprofile', data: user.data});
-              dispatch(NavigationActions.navigate({routeName: 'tab'}));
+              if(user.data.temporary_password){
+                dispatch(NavigationActions.navigate({routeName: 'changepassword',params:{type:'temp'}}));                    
+                } else {
+                    dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                }
             }
           } else {
             this.setState({isLoading:false});

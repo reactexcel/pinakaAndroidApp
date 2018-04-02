@@ -135,7 +135,7 @@ function facebookSignup(params){
 
 function sendCode(phone){
     var formData = new FormData();
-    formData.append('phone',  phone);
+    formData.append('phone', phone);       
     console.log(formData)
 
     return new Promise((resolve, reject) => {

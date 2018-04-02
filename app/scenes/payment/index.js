@@ -29,6 +29,7 @@ import { API } from '../../constants';
 import PLoading from '../../components/loading';
 import { createReservation, createCardToken, cardPay } from '../../actions';
 import moment from 'moment';
+import DatePicker from 'react-native-datepicker'
 import EDialog from '../../components/edialog';
 
 class PaymentScreen extends Component{
@@ -45,7 +46,9 @@ class PaymentScreen extends Component{
             paymentmethod: 0,
             isLoading: false,
             isError: false,
-            errorText: ""
+            errorText: "",
+            reservationTime:'',
+            reservationDate:'',
         };
     }
 
@@ -82,7 +85,6 @@ class PaymentScreen extends Component{
     }
 
     onPay(){
-      console.log('pay');
         if(this.props.user.creditcards.length > 0){
             //show Indicator
             this.setState({
@@ -102,7 +104,7 @@ class PaymentScreen extends Component{
                 feed_id: this.props.navigation.state.params.feed._id,
                 people_count: this.state.peoples,
                 lane_count: this.state.lines,
-                booking_time: moment(this.props.navigation.state.params.date).format('YYYY-MM-D') + " " + (17 + (this.props.navigation.state.params.hours[0]==true?0:(this.props.navigation.state.params.hours[1]==true?1:(this.props.navigation.state.params.hours[2]==true?2:3))))+ ":00:00",
+                booking_time: this.state.reservationDate + " " + this.state.reservationTime,
                 purchase_amount: this.props.navigation.state.params.feed.discounted_cost,
                 number: this.props.user.creditcards[this.state.paymentmethod].number,
                 cvv: this.props.user.creditcards[this.state.paymentmethod].cvv,
@@ -112,7 +114,6 @@ class PaymentScreen extends Component{
 
 
 
-            // createCardToken(cardDetails).then(data => { console.log(data); });
             createCardToken(cardDetails).then(data => {
               console.log(data,'card data');
               const paymentData = {data:data,amount:this.props.navigation.state.params.feed.discounted_cost,currency:'USD',description:'payment'}
@@ -186,6 +187,7 @@ class PaymentScreen extends Component{
     }
 
     render (){
+        console.log(this.state,'asdasddasd')
         StatusBar.setBarStyle('light-content');
         return (
             <Container style={styles.container}>
@@ -214,7 +216,51 @@ class PaymentScreen extends Component{
                     <Text style={styles.datetimeText}>
                         Date & Time
                     </Text>
-                    <Text style={styles.dateText}>{this.showDate()}</Text>
+                    <View>
+                    <DatePicker
+                        style={{width: 200}}
+                        date={this.state.reservationDate}
+                        mode="date"
+                        placeholder="Select Reservation Date"
+                        format="YYYY-MM-DD"
+                        confirmBtnText="Done"
+                        minDate={new Date()}
+                        cancelBtnText="Cancel"
+                        onDateChange={(date) => this.setState({reservationDate: date})}
+                        showIcon={false}
+                        customStyles={{
+                            dateInput: styles.birthdayText,
+                            dateText: {
+                                fontFamily: 'Roboto',
+                                fontWeight: 'normal',
+                                fontSize: 16,
+                                lineHeight: 33
+                            }
+                        }}
+                    />
+                    </View>
+                    <View>
+                    <DatePicker
+                        style={{width: 200}}
+                        date={this.state.reservationTime}
+                        mode="date"
+                        placeholder="Select Reservation Time"
+                        mode="time"
+                        confirmBtnText="Done"
+                        cancelBtnText="Cancel"
+                        onDateChange={(date) => this.setState({reservationTime: date})}
+                        showIcon={false}
+                        customStyles={{
+                            dateInput: styles.birthdayText,
+                            dateText: {
+                                fontFamily: 'Roboto',
+                                fontWeight: 'normal',
+                                fontSize: 16,
+                                lineHeight: 33
+                            }
+                        }}
+                    />
+                    </View>
                     {this.props.navigation.state.params.hours[0]?
                     <Text style={styles.timeText}>{API.BOOKINGTIME[0]}</Text>: null}
                     {this.props.navigation.state.params.hours[1]?

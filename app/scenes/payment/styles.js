@@ -21,7 +21,18 @@ export default {
         fontFamily: 'Roboto',
         fontWeight: 'normal'
     },
-
+    birthdayText: {
+        height: 45,
+        width: (width - 48)/2,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        borderWidth: 0
+    },
+    
+    birthdayWrapper: {
+        width: (width - 48)/2,
+        height: 45
+    },
     title: {
         color: 'white',
         fontFamily: 'Roboto',

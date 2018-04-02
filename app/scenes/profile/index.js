@@ -70,8 +70,10 @@ class ProfileScreen extends Component{
     showInterest(){
         var interests = this.props.user.interests;
         var ret = '';
-        for(var i = 0; i < interests.length; i++){
-            ret +=interests[i].id.name + ", "
+        if(interests != undefined && interests[0] != null){
+            for(var i = 0; i < interests.length; i++){
+                ret +=interests[i].id.name + ", "
+            }
         }
 
         if(ret.length > 0){

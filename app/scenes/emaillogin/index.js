@@ -98,7 +98,11 @@ class EmailLoginScreen extends Component{
                 //save token
                 AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
                 dispatch({type: 'setprofile', data: data});
-                dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                if(data.temporary_password){
+                dispatch(NavigationActions.navigate({routeName: 'changepassword',params:{type:'temp'}}));                    
+                } else {
+                    dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                }
             }
         })
         .catch(err => {

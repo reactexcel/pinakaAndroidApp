@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, Dimensions, AsyncStorage, Keyboard } from 'react-native';
+import { StatusBar, Dimensions, AsyncStorage, Keyboard, ToastAndroid } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
@@ -79,18 +79,20 @@ class EmailSignupScreen extends Component{
                     isError: true,
                     errorText: 'Please enter your zipcode.'
                 });
-            } else{
-                this.setState({
-                    progress: this.state.progress + 1
-                });
-            }
-        }else{
-            if(this.state.password == ''){
-                this.setState({
-                    isError: true,
-                    errorText: 'Please enter password'
-                });
-            }else{
+            } 
+        //     else{
+        //         this.setState({
+        //             progress: this.state.progress + 1
+        //         });
+        //     }
+        // }else{
+        //     if(this.state.password == ''){
+        //         this.setState({
+        //             isError: true,
+        //             errorText: 'Please enter password'
+        //         });
+        //     }
+            else{
                 //onSign Up
 
                 //show Indicator
@@ -106,7 +108,6 @@ class EmailSignupScreen extends Component{
                     gender: this.state.gender,
                     marital: this.state.marital,
                     kids: this.state.kids,
-                    password: this.state.password,
                     interests: this.props.navigation.state.params.interest
                 };
                 Keyboard.dismiss();
@@ -132,29 +133,31 @@ class EmailSignupScreen extends Component{
                                 this.setState({
                                     isError: true,
                                     errorText: 'This phone number already used, Pleae try again.',
-                                    progress: 2
+                                    progress: 1
                                 })
                                 break;
                             case API.RESPONSE.SIGNUP.INVALIDEMAIL:
                                 this.setState({
                                     isError: true,
                                     errorText: 'This email is invalid now. Please try again.',
-                                    progress: 2
+                                    progress: 1
                                 });
                                 break;
                             case API.RESPONSE.SIGNUP.INVALIDZIPCODE:
                                 this.setState({
                                     isError: true,
                                     errorText: 'This zipcode is invalid now. Please try again',
-                                    progress: 2
+                                    progress: 1
                                 });
                                 break;
                         }
                     }else{
                         //save token
-                        AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
-                        dispatch({type: 'setprofile', data: data});
-                        dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        // AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                        // dispatch({type: 'setprofile', data: data});
+                        // dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                        dispatch(NavigationActions.navigate({routeName: 'emaillogin'}));
                     }
                 })
                 .catch(err => {
