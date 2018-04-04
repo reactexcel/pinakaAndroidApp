@@ -47,7 +47,7 @@ class WelcomeScreen extends Component{
     }
 
     componentWillMount() {
-    //     BackHandler.addEventListener('hardwareBackPress', () => {
+        // BackHandler.addEventListener('hardwareBackPress', () => {
     //         const { dispatch, navigation, nav } = this.props;
     //         console.log('****')
     //         console.log(nav)
