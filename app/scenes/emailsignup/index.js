@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, Dimensions, AsyncStorage, Keyboard, ToastAndroid } from 'react-native';
+import { StatusBar, Dimensions, AsyncStorage, Keyboard, ToastAndroid, Alert } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
@@ -157,8 +157,12 @@ class EmailSignupScreen extends Component{
                         // AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
                         // dispatch({type: 'setprofile', data: data});
                         // dispatch(NavigationActions.navigate({routeName: 'tab'}));
-                        ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
-                        dispatch(NavigationActions.navigate({routeName: 'emaillogin'}));
+                        // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                        // dispatch(NavigationActions.navigate({routeName: 'emaillogin'}));
+                        Alert.alert('Thank You! For Sign up','Pinaka Team Welcome You. For Login Please Check You Email For Password.',[
+                        {text:'OK',onPress:()=>{
+                            dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
+                        }]);
                     }
                 })
                 .catch(err => {

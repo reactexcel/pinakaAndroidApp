@@ -302,8 +302,12 @@ class PhoneSignupScreen extends Component{
                         // AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
                         // dispatch({type: 'setprofile', data: data});
                         // dispatch(NavigationActions.navigate({routeName: 'tab'}));
-                        ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
-                        dispatch(NavigationActions.navigate({routeName: 'phonelogin'}));
+                        // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                        // dispatch(NavigationActions.navigate({routeName: 'phonelogin'}));
+                        Alert.alert('Thank You! For Sign up','Pinaka Team Welcome You. For Login Please Check You Email For Password.',[
+                        {text:'OK',onPress:()=>{
+                            dispatch(NavigationActions.navigate({routeName: 'phonelogin'}))}
+                        }]);
                     }
                 })
                 .catch(err => {

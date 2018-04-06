@@ -53,10 +53,11 @@ function createReservation(token, params){
     });
 }
 
-function cancelReservation(token, id){
+function cancelReservation(token, id, heading){
     var formData = new FormData();
     formData.append('token', token);
     formData.append('reservation_id', id);
+    formData.append('reservation_for', heading);
 
     return new Promise((resolve, reject) => {
         fetch(API.SERVER_DEV_URL + 'reservation/cancel', {

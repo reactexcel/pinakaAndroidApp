@@ -17,11 +17,16 @@ export default {
     },
 
     btnstyle: {
-      borderWidth: 1,
-      borderRadius: 2,
-      borderColor: 'blue',
+      backgroundColor: '#e636a6',
+      borderRadius: 100,
       marginLeft: 8
     },
+
+    cancelbtnstyle: {
+        backgroundColor: '#ffa958',
+        borderRadius: 100,
+        marginLeft: 8
+      },
 
     mainContaier: {
         width: width - 80,
@@ -74,7 +79,7 @@ export default {
         fontFamily: 'Roboto',
         fontWeight: 'medium',
         letterSpacing: 0.5,
-        color: '#3f6ff6',
+        color: 'white',
         fontSize: 14
     }
 }

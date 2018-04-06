@@ -61,7 +61,7 @@ class ReservationDetailScreen extends Component{
         });
 
         var { token,  dispatch } = this.props;
-        cancelReservation(token, this.state.reservation._id)
+        cancelReservation(token, this.state.reservation._id,this.state.reservation.feed_id.heading)
         .then(data => {
             //hide indicator
             this.setState({
