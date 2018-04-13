@@ -47,7 +47,7 @@ class FacebookSignupScreen extends Component{
             marital: false,
             kids: false,
             email: "",
-            birthday: moment().format("YYYY-MM-D"),
+            birthday: moment().format("MM-D"),
             zipcode: "",
             password: "",
             showDatePicker: false,

@@ -20,7 +20,8 @@ import {
     Icon,
     Radio,
     Grid,
-    Col
+    Col,
+    Picker
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
@@ -39,16 +40,19 @@ class PaymentScreen extends Component{
 
     constructor(props){
         super(props);
-
+        console.log(this.props.navigation.state.params.feed,'54654654654654')
         this.state = {
-            peoples: 1,
+            peoples: 5,
             lines: 1,
             paymentmethod: 0,
             isLoading: false,
             isError: false,
             errorText: "",
+            total_hour: 60,
             reservationTime:'',
             reservationDate:'',
+            original_rate: this.props.navigation.state.params.feed.discounted_cost,            
+            rate: this.props.navigation.state.params.feed.discounted_cost
         };
     }
 
@@ -63,19 +67,37 @@ class PaymentScreen extends Component{
     }
 
     onCalPeople(delta){
-        if(this.state.peoples + delta  > 0){
+        if(this.state.peoples + delta  > 0 && this.state.peoples + delta <= 20 ){
             this.setState({
                 peoples: this.state.peoples + delta
             });
+        } else if(this.state.peoples + delta > 20) {
+            this.setState({
+                isError : true,
+                errorText: 'People Limit Reached'
+            })
         }
+            //     if(this.state.peoples + delta  > 0 && this.state.peoples + delta <= 20 ){
+            //     this.rateCalculate('people',this.state.peoples + delta)
+            // }
     }
 
     onCalLines(delta){
-        if(this.state.lines + delta > 0){
+        if(this.state.lines + delta > 0 && this.state.lines + delta <= 5 ){
             this.setState({
                 lines: this.state.lines + delta
             });
+        } else if(this.state.lines + delta > 5) {
+            this.setState({
+                isError: true,
+                errorText: 'Bowiling Line Limit Reached'
+            })
         }
+        // if(this.state.lines + delta > 0 && this.state.lines + delta <= 5 ){
+        //     this.rateCalculate('lines',this.state.lines + delta)
+            
+        // }
+        
     }
 
     onPaymentMethod(index){
@@ -90,25 +112,6 @@ class PaymentScreen extends Component{
             this.setState({
                 isLoading: true
             });
-            if(this.state.reservationDate == '' && this.state.reservationTime == ''){
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                    errorText: "Please Enter Reservation Date & Time"
-                });
-            }else if(this.state.reservationTime == '' ){
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                    errorText: "Please Enter Reservation Time"
-                });
-            } else if (this.state.reservationDate == '') {
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                    errorText: "Please Enter Reservation Date"
-                });
-            } else {
             var cardDetails =  {
                 number: this.props.user.creditcards[this.state.paymentmethod].number,
                 expired_m: this.props.user.creditcards[this.state.paymentmethod].expired_m,
@@ -123,7 +126,12 @@ class PaymentScreen extends Component{
                 feed_id: this.props.navigation.state.params.feed._id,
                 people_count: this.state.peoples,
                 lane_count: this.state.lines,
-                booking_time: this.state.reservationDate + " " + this.state.reservationTime,
+                actual_price:this.props.navigation.state.params.feed.original_cost,
+                article:this.props.navigation.state.params.feed.heading,
+                reservation_for:this.props.navigation.state.params.feed.heading,
+                reservation_hours:this.state.total_hour,
+                // booking_time: this.state.reservationDate + " " + this.state.reservationTime,
+                booking_time: moment(this.props.navigation.state.params.date).format('YYYY-MM-D') + " " + (17 + (this.props.navigation.state.params.hours[0]==true?0:(this.props.navigation.state.params.hours[1]==true?1:(this.props.navigation.state.params.hours[2]==true?2:3))))+ ":00:00",
                 purchase_amount: this.props.navigation.state.params.feed.discounted_cost,
                 number: this.props.user.creditcards[this.state.paymentmethod].number,
                 cvv: this.props.user.creditcards[this.state.paymentmethod].cvv,
@@ -185,7 +193,6 @@ class PaymentScreen extends Component{
               });
             });
 
-            }
         }else{
             this.setState({
                 isError: true,
@@ -206,6 +213,133 @@ class PaymentScreen extends Component{
             errorText: ""
         });
     }
+
+    // onValueChange(value){
+    //     // this.setState({total_hour:value},
+    //     // ()=>{
+    //     //     this.rateCalculate('hour',delta)
+    //     // }
+    //     // );
+    //     this.rateCalculate('hours', value )
+    // }
+
+    // rateCalculate(key,value){
+    //     let { peoples, lines, total_hour, rate, original_rate } = this.state;
+    //     console.log(value ,Math.floor((peoples - 5) / 3))
+    //     let tempHour;
+    //     switch(total_hour){
+    //         case 60:
+    //         tempHour = 1;
+    //         break;
+    //         case 120:
+    //         tempHour = 2 ;
+    //         break;
+    //         case 180:
+    //         tempHour = 3 ;
+    //         break;
+    //         case 240:
+    //         tempHour = 4 ;
+    //         break;
+    //     }
+    //     //---------------people----------------
+    //     if(key==="people" && value > 7 && ((value - 5) % 3 === 0)){
+    //         peoples = value;
+    //         rate = tempHour * (original_rate + original_rate * Math.floor((value - 5) / 3))
+    //     }else if(key==="people" && value < 8){
+    //         peoples = value
+    //         rate = tempHour * (original_rate)
+    //     }else if(key==="people"){
+    //         peoples = value
+    //     }
+    //     //-----------------lines-------------
+    //     if(key==="lines" && value > 1 ){
+    //         lines = value;
+    //         let calValue = lines;
+    //         let caltime
+    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
+    //             calValue += Math.floor((peoples - 5) / 3)
+    //         }
+    //         if(tempHour > 1) {
+    //             caltime += tempHour
+    //         }
+    //         console.log(lines , calValue ,'check')
+    //         console.log(original_rate + original_rate * calValue)
+    //         console.log((tempHour*(original_rate + original_rate * lines)))
+    //         console.log(Math.floor((peoples - 5) / 3));
+    //         console.log((peoples - 5)/3)
+    //         console.log( (tempHour*(original_rate + original_rate * lines)) * Math.floor((peoples-5)/3) )
+    //         rate = (tempHour*(original_rate + original_rate * lines))
+    //     }else if(key==="lines" && value == 1){
+    //         lines = value
+    //         let calValue = lines;
+    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
+    //             calValue += Math.floor((peoples - 5) / 3)
+    //         }
+    //         if(tempHour > 1) {
+    //             calValue += tempHour
+    //         }
+    //         rate = tempHour * (original_rate * calValue)
+    //     }else if(key==="lines"){
+    //         lines = value
+    //     }
+    //     //------------hours------------------
+    //     if(key == 'hours'){
+
+    //         switch(value){
+    //             case 60:
+    //             tempHour = 1;
+    //             break;
+    //             case 120:
+    //             tempHour = 2 ;
+    //             break;
+    //             case 180:
+    //             tempHour = 3 ;
+    //             break;
+    //             case 240:
+    //             tempHour = 4 ;
+    //             break;
+    //         }
+    //     }
+
+    //     if(key==="hours" && tempHour > 1){
+    //         total_hour = value;
+    //         let calValue = tempHour;
+    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
+    //             calValue += Math.floor((peoples - 5) / 3)
+    //         }
+    //         if(lines > 1) {
+    //             calValue += lines
+    //         }
+    //         rate = original_rate + original_rate * calValue
+    //     }else if(key==="hours" && tempHour == 1){
+    //         total_hour = value
+    //         let calValue = tempHour;
+    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
+    //             calValue += Math.floor((peoples - 5) / 3)
+    //         }
+    //         if(lines > 1) {
+    //             calValue += lines
+    //         }
+    //         rate = original_rate * calValue;
+    //     }else if(key==="hours"){
+    //         total_hour = value
+    //     }
+        
+        
+        
+    //     this.setState({
+    //         peoples,
+    //         lines,
+    //         total_hour,
+    //         rate
+    //     })
+        
+    // }
+
+    onSchedule(){
+        var { dispatch } = this.props;
+       dispatch(NavigationActions.navigate({routeName: 'schedule', params:{feed:this.props.navigation.state.params.feed}}));
+   }
 
     render (){
         StatusBar.setBarStyle('light-content');
@@ -238,7 +372,7 @@ class PaymentScreen extends Component{
                     <Text style={styles.datetimeText}>
                         Date & Time
                     </Text>
-                    <View>
+                    {/* <View>
                     <DatePicker
                         style={{width: 200}}
                         date={this.state.reservationDate}
@@ -286,15 +420,30 @@ class PaymentScreen extends Component{
                             }
                         }}
                     />
-                    </View>
-                    {/* {this.props.navigation.state.params.hours[0]?
-                    <Text style={styles.timeText}>{API.BOOKINGTIME[0]}</Text>: null}
-                    {this.props.navigation.state.params.hours[1]?
-                        <Text style={styles.timeText}>{API.BOOKINGTIME[1]}</Text>: null}
-                    {this.props.navigation.state.params.hours[2]?
-                    <Text style={styles.timeText}>{API.BOOKINGTIME[2]}</Text>: null}
-                    {this.props.navigation.state.params.hours[3]?
-                    <Text style={styles.timeText}>{API.BOOKINGTIME[3]}</Text>: null} */}
+                    <Text style={styles.datetimeText} >Number Of Hours </Text>
+                        <Picker
+                            iosHeader="Select one"
+                            mode="dropdown"
+                            selectedValue={this.state.total_hour}
+                            onValueChange={(e)=>this.onValueChange(e)}
+                            >
+                            <Item label="1 Hour" value={60} />
+                            <Item label="2 Hour" value={120} />
+                            <Item label="3 Hour" value={180} />
+                            <Item label="4 Hour" value={240} />
+                        </Picker>
+
+                    </View> */}
+                    <Text style={styles.dateText} onPress={()=>{this.onSchedule()}} >{this.showDate()}</Text>
+                   {this.props.navigation.state.params.hours[0]?
+                   <Text style={styles.timeText} onPress={()=>{this.onSchedule()}} >{API.BOOKINGTIME[0]}</Text>: null}
+                   {this.props.navigation.state.params.hours[1]?
+                       <Text style={styles.timeText} onPress={()=>{this.onSchedule()}} >{API.BOOKINGTIME[1]}</Text>: null}
+                   {this.props.navigation.state.params.hours[2]?
+                   <Text style={styles.timeText} onPress={()=>{this.onSchedule()}} >{API.BOOKINGTIME[2]}</Text>: null}
+                   {this.props.navigation.state.params.hours[3]?
+                   <Text style={styles.timeText} onPress={()=>{this.onSchedule()}} >{API.BOOKINGTIME[3]}</Text>: null}
+
                     <List style={styles.list}>
                         <ListItem style={styles.listItem}>
                             <Body>
@@ -369,7 +518,7 @@ class PaymentScreen extends Component{
                 </Content>
                 <Footer style={styles.footer}>
                     <View>
-                        <Text style={styles.footerPriceText}>${this.props.navigation.state.params.feed.discounted_cost.toFixed(2)}</Text>
+                        <Text style={styles.footerPriceText}>${this.state.rate}</Text>
                         <Text style={styles.footerLineText}>for {this.state.lines} lines</Text>
                     </View>
                     <Button style={this.props.user.creditcards && this.props.user.creditcards[0] != undefined ?styles.payBtn:styles.payBtnDisable} onPress={() => this.onPay()} disabled={this.props.user.creditcards && this.props.user.creditcards[0] != undefined ?false:true} >

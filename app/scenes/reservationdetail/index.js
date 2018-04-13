@@ -51,7 +51,8 @@ class ReservationDetailScreen extends Component{
 
     showBookingTime(reservation){
         var bookingtime = new Date(reservation.booking_time);
-        return (bookingtime.getHours())+":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) + "-" + (bookingtime.getHours() + 1) + ":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) ;
+        return (bookingtime.getUTCHours() - 12 )+":00 PM - " + (bookingtime.getUTCHours() - 11) + ":00 PM";
+        // return (bookingtime.getHours())+":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) + "-" + (bookingtime.getHours() + 1) + ":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) ;
     }
 
     onCancel(){

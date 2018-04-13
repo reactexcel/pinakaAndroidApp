@@ -44,7 +44,7 @@ class PhoneSignupScreen extends Component{
             progress: 1,
             step: 0,
             hidePass: true,
-            date: moment().format("YYYY-MM-D"),
+            date: moment().format("MM-D"),
             showDatePicker: false,
             gender: true,
             marital: false,
@@ -304,9 +304,10 @@ class PhoneSignupScreen extends Component{
                         // dispatch(NavigationActions.navigate({routeName: 'tab'}));
                         // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
                         // dispatch(NavigationActions.navigate({routeName: 'phonelogin'}));
-                        Alert.alert('Thank You! For Sign up','Pinaka Team Welcome You. For Login Please Check You Email For Password.',[
+                        Alert.alert('Thank you for joining our rewards program!',
+                        'You are on your way to entertainment deals. Check out what new and come have some fun today!. We sent an email to the email address provided. Please confirm to complete your new account.',[
                         {text:'OK',onPress:()=>{
-                            dispatch(NavigationActions.navigate({routeName: 'phonelogin'}))}
+                            dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
                         }]);
                     }
                 })
@@ -482,7 +483,7 @@ class PhoneSignupScreen extends Component{
                                         date={this.state.date}
                                         mode="date"
                                         placeholder="Select your birthday"
-                                        format="YYYY-MM-DD"
+                                        format="MM-DD"
                                         confirmBtnText="Done"
                                         cancelBtnText="Cancel"
                                         onDateChange={(date) => this.setState({date: date})}

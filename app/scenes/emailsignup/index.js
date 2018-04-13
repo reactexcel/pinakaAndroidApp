@@ -46,7 +46,7 @@ class EmailSignupScreen extends Component{
             marital: false,
             kids: false,
             email: "",
-            birthday: moment().format("YYYY-MM-D"),
+            birthday: moment().format("MM-D"),
             zipcode: "",
             password: "",
             showDatePicker: false,
@@ -159,7 +159,8 @@ class EmailSignupScreen extends Component{
                         // dispatch(NavigationActions.navigate({routeName: 'tab'}));
                         // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
                         // dispatch(NavigationActions.navigate({routeName: 'emaillogin'}));
-                        Alert.alert('Thank You! For Sign up','Pinaka Team Welcome You. For Login Please Check You Email For Password.',[
+                        Alert.alert('Thank you for joining our rewards program!',
+                        'You are on your way to entertainment deals. Check out what new and come have some fun today!. We sent an email to the email address provided. Please confirm to complete your new account.',[
                         {text:'OK',onPress:()=>{
                             dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
                         }]);
@@ -279,7 +280,7 @@ class EmailSignupScreen extends Component{
                                         date={this.state.birthday}
                                         mode="date"
                                         placeholder="Select your birthday"
-                                        format="YYYY-MM-DD"
+                                        format="MM-DD"
                                         confirmBtnText="Done"
                                         cancelBtnText="Cancel"
                                         onDateChange={(date) => this.setState({birthday: date})}

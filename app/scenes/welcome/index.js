@@ -119,8 +119,8 @@ class WelcomeScreen extends Component{
                     {/* <Text style={styles.logoText}>Pinaka</Text> */}
                 </View>
                 <View style={styles.bottomContainer}>
-                    <Text style={styles.bottomText1}>Here is some text</Text>
-                    <Text style={styles.bottomText2}>Here is some text</Text>
+                    <Text style={styles.bottomText1}>Step Inside</Text>
+                    <Text style={styles.bottomText2}>Entertainment Plans Await</Text>
                     <View style={styles.bottomBtnContainer}>
                         <Button style={styles.signupBtn} onPress={() => this.onSignup()}>
                             <Label style={styles.signupBtnText}>Sign Up</Label>

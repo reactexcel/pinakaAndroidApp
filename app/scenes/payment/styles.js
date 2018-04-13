@@ -162,7 +162,7 @@ export default {
     paymentIcon: {
         width: 32,
         height: 22,
-        mrginRight: 16
+        marginRight: 16
     },
 
     paymentListItemBody: {
