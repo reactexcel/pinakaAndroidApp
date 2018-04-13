@@ -30,6 +30,7 @@ import EditProfileScreen from '../scenes/editprofile';
 import CreditcardListScreen from '../scenes/creditcardlist';
 import CreditDetailScreen from '../scenes/creditdetail';
 import ReservationDetailScreen from '../scenes/reservationdetail';
+import ChangePassword from '../scenes/changepassword';
 
 
 export const AppNavigator = StackNavigator({
@@ -55,7 +56,8 @@ export const AppNavigator = StackNavigator({
     editprofile: { screen: EditProfileScreen },
     creditcardlist: { screen: CreditcardListScreen },
     creditdetail: { screen: CreditDetailScreen },
-    reservationdetail: { screen: ReservationDetailScreen }
+    reservationdetail: { screen: ReservationDetailScreen },
+    changepassword: { screen: ChangePassword },
 });
 
 // const AppWithNavigationState = ({dispatch, nav}) => (

@@ -25,6 +25,31 @@ function emailLogin(email, password){
     });
 }
 
+function faccebookLogin(email, password){
+    var formData = new FormData();
+    formData.append('email', email);
+    formData.append('facebookId', password);
+
+    return new Promise((resolve, reject) => {
+        fetch(API.SERVER_DEV_URL + 'user/signup_login_fb', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log("Email Login API Success", data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log("Email Login API Error", err);
+            reject(err);
+        });
+    });
+}
+
 function emailSignup(params){
     console.log(params);
     if(params.interests == undefined){
@@ -38,9 +63,7 @@ function emailSignup(params){
     formData.append('gender', params.gender?1:0);
     formData.append('marital', params.marital?1:0);
     formData.append('kids', params.kids?1:0);
-    if(params.phone != undefined){
-        formData.append('phone', '+1' + params.phone);
-    }
+    formData.append("phone", params.phone != undefined ?  params.phone: "");
     formData.append('interests', params.interests);
     formData.append('source', 0);
     formData.append('type', 0);
@@ -66,9 +89,51 @@ function emailSignup(params){
     });
 }
 
+function facebookSignup(params){
+    console.log(params,'===================');
+    if(params.interests == undefined){
+      params.interests = '59b02c4a5ecd37001fe35074,1';
+    }
+    var formData = new FormData();
+    formData.append('name', params.name != '' ? params.name :'' );
+    formData.append('email', params.email);
+    formData.append('birthday', params.birthday.toISOString());
+    formData.append('zipcode', params.zipcode);
+    formData.append('facebookId', params.id);
+    formData.append('gender', params.gender?1:0);
+    formData.append('marital', params.marital?1:0);
+    formData.append('kids', params.kids?1:0);
+    if(params.phone != undefined){
+        formData.append('phone',  params.phone);
+    }
+    formData.append('interests', params.interests);
+    formData.append('source', 0);
+    formData.append('type', 0);
+    formData.append('password', params.password);
+
+    return new Promise((resolve, reject) => {
+        fetch(API.SERVER_DEV_URL + 'user/signup_login_fb', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log("Email Signup API Success", data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log("Email Signup API Error", err);
+            reject(err);
+        });
+    });
+}
+
 function sendCode(phone){
     var formData = new FormData();
-    formData.append('phone', '+1' + phone);
+    formData.append('phone',"+1"+ phone);       
     console.log(formData)
 
     return new Promise((resolve, reject) => {
@@ -195,7 +260,7 @@ function updateProfile(token, params){
     formData.append("gender", params.gender?1:0);
     formData.append("marital", params.marital?1:0);
     formData.append("kids", params.kids?1:0);
-    formData.append("phone", params.phone != "" ? "+1" + params.phone: "");
+    formData.append("phone", params.phone != "" ?  params.phone: "");
     formData.append("interests", params.interests);
 
     return new Promise((resolve, reject) => {
@@ -218,13 +283,16 @@ function updateProfile(token, params){
     });
 }
 
-function changePassword(token, password){
+function changePassword(email, password, new_password){
     var formData = new FormData();
     formData.append('password', password);
-    formData.append('token', token);
+    formData.append('email', email);
+    formData.append('new_password', new_password);
+    // formData.append('token', token);
+    
 
     return new Promise((resolve, reject) => {
-        fetch(API.SERVER_DEV_URL + 'user/update', {
+        fetch(API.SERVER_DEV_URL + 'user/change_password', {
             method: 'PUT',
             headers: {
                 'Content-Type':'multipart/form-data'
@@ -276,5 +344,7 @@ module.exports = {
     updateProfile,
     changePassword,
     forgot,
+    facebookSignup,
+    faccebookLogin,
     searchUser
 }

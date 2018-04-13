@@ -89,7 +89,7 @@ class SavedScreen extends Component{
                             onRefresh={this.onRefresh.bind(this)}/>
                     }>
                     <List>
-                        {this.props.savedlist.map((saved, index) => {
+                        {this.props.savedlist && this.props.savedlist[0] != undefined ? this.props.savedlist.map((saved, index) => {
                             return (
                                 <ListItem style={styles.listItem} onPress={() => this.onDetail(saved)}>
                                     <Body>
@@ -112,7 +112,10 @@ class SavedScreen extends Component{
                                     </Body>
                                 </ListItem>
                             );
-                        })}                        
+                        })
+                        :
+                        null
+                    }                        
                     </List>
                 </Content>
             </Container>

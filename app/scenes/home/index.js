@@ -34,11 +34,24 @@ class HomeScreen extends Component{
 
         this.state = {
             selectedTab: 0,
+            feedlists:[],
             refreshing: false,
             searchtag: ""
         };
 
         this.onRefresh();
+    }
+
+    componentWillMount(){
+        if(this.props.feedlist && this.props.feedlist[0] != undefined){
+            this.setState({feedlists:this.props.feedlist})
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.feedlist && nextProps.feedlist[0] != undefined){
+            this.setState({feedlists:nextProps.feedlist})
+        }
     }
 
     loadFeeds(){
@@ -83,20 +96,26 @@ class HomeScreen extends Component{
 
     onSave(index){
         var { token, dispatch } = this.props;
-        var feed = this.props.feedlist && this.props.feedlist != undefined ? this.props.feedlist[index] : null;
+        var feed = this.state.feedlists && this.state.feedlists != undefined ? this.state.feedlists[index] : null;
 
         if(feed.isSaved == null){
+            var listFeed = this.state.feedlists && this.state.feedlists != undefined ? this.state.feedlists : null;
+            listFeed[index].isSaved = feed._id;
+            this.setState({feedlists:listFeed})
             savedFeed(token, feed._id)
             .then(data => {
-                var feedlist = this.props.feedlist && this.props.feedlist != undefined ? this.props.feedlist : null;
+                var feedlist = this.state.feedlist && this.state.feedlist != undefined ? this.state.feedlist : null;
                 feedlist[index].isSaved = data.id;
                 dispatch({type: 'setfeed', data: []});
                 dispatch({type: 'setfeed', data: feedlist});
-            })
+            })  
             .catch(err => {
                 console.log(err);
             });
         }else{
+            var listFeed = this.state.feedlists && this.state.feedlists != undefined ? this.state.feedlists : null;
+            listFeed[index].isSaved = null;
+            this.setState({feedlists:listFeed})
             unSavedFeed(token, feed.isSaved)
             .then(data => {
                 var feedlist = this.props.feedlist && this.props.feedlist != undefined ? this.props.feedlist : null;
@@ -155,13 +174,13 @@ class HomeScreen extends Component{
                                     </Text>
                                 </Button>
                             </Col>
-                            <Col style={styles.tabItemContainer}>
+                            {/* <Col style={styles.tabItemContainer}>
                                 <Button onPress={() => this.onSelectedTab(2)} transparent style={[styles.tabItem, (this.state.selectedTab == 2) && styles.tabActiveItem]}>
                                     <Text style={[styles.tabItemText, (this.state.selectedTab == 2) && styles.tabItemActiveText]}>
                                         WHAT'S NEW
                                     </Text>
                                 </Button>
-                            </Col>
+                            </Col> */}
                         </Grid>
                     </Body>
                 </Header>
@@ -173,7 +192,7 @@ class HomeScreen extends Component{
                         />
                     }>
                     <List>
-                        {this.props.feedlist && this.props.feedlist[0] != undefined ? this.props.feedlist.map((feed, index) => {
+                        {this.state.feedlists && this.state.feedlists[0] != undefined ? this.state.feedlists.map((feed, index) => {
                             return (
                                 <ListItem style={styles.listItem} onPress={() => this.onDetail(feed)} key={index}>
                                     <Body>

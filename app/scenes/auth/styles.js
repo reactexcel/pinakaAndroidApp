@@ -41,8 +41,8 @@ export default {
 
     logo: {
         marginTop: 20,
-        width: 120,
-        height: 120
+        width: 142,
+        height: 125
     },
 
     text: {

@@ -21,7 +21,18 @@ export default {
         fontFamily: 'Roboto',
         fontWeight: 'normal'
     },
-
+    birthdayText: {
+        height: 45,
+        width: (width - 48)/2,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        borderWidth: 0
+    },
+    
+    birthdayWrapper: {
+        width: (width - 48)/2,
+        height: 45
+    },
     title: {
         color: 'white',
         fontFamily: 'Roboto',
@@ -151,7 +162,7 @@ export default {
     paymentIcon: {
         width: 32,
         height: 22,
-        mrginRight: 16
+        marginRight: 16
     },
 
     paymentListItemBody: {
@@ -202,6 +213,15 @@ export default {
         width: 156,
         height: 48,
         backgroundColor: '#e636a6',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    payBtnDisable: {
+        width: 156,
+        height: 48,
+        backgroundColor: 'grey',
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center'

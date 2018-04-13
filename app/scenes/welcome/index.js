@@ -15,7 +15,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, BackHandler, BackAndroid, AsyncStorage } from 'react-native';
+import { StatusBar, BackHandler, BackAndroid, AsyncStorage, Keyboard} from 'react-native';
 import AlertCheck from '../../components/alertcheck/';
 import PLoading from '../../components/loading';
 import { getInterests, emailLogin } from '../../actions';
@@ -47,7 +47,7 @@ class WelcomeScreen extends Component{
     }
 
     componentWillMount() {
-    //     BackHandler.addEventListener('hardwareBackPress', () => {
+        // BackHandler.addEventListener('hardwareBackPress', () => {
     //         const { dispatch, navigation, nav } = this.props;
     //         console.log('****')
     //         console.log(nav)
@@ -58,18 +58,21 @@ class WelcomeScreen extends Component{
     //         dispatch({ type: 'Navigation/BACK' });
     //         return true;
     //     });
+    Keyboard.dismiss();    
         var { dispatch } = this.props;
         AsyncStorage.getItem('user', (err, result) => {
           if(result !== null ){
             this.setState({isLoading:true});
             const user = JSON.parse(result);
-            console.log(user,'AsyncStorage');
             if(user.user == 'logout'){
               this.setState({isLoading:false});
             } else if(user.loginType == 'login'){
-              console.log(user,'login');
               dispatch({type: 'setprofile', data: user.data});
-              dispatch(NavigationActions.navigate({routeName: 'tab'}));
+              if(user.data.temporary_password){
+                dispatch(NavigationActions.navigate({routeName: 'changepassword',params:{type:'temp'}}));                    
+                } else {
+                    dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                }
             }
           } else {
             this.setState({isLoading:false});
@@ -116,8 +119,8 @@ class WelcomeScreen extends Component{
                     {/* <Text style={styles.logoText}>Pinaka</Text> */}
                 </View>
                 <View style={styles.bottomContainer}>
-                    <Text style={styles.bottomText1}>Here is some text</Text>
-                    <Text style={styles.bottomText2}>Here is some text</Text>
+                    <Text style={styles.bottomText1}>Step Inside</Text>
+                    <Text style={styles.bottomText2}>Entertainment Plans Await</Text>
                     <View style={styles.bottomBtnContainer}>
                         <Button style={styles.signupBtn} onPress={() => this.onSignup()}>
                             <Label style={styles.signupBtnText}>Sign Up</Label>

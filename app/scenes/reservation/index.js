@@ -45,6 +45,7 @@ class ReservationScreen extends Component{
         var { token, dispatch } = this.props;
         getReservation(token, 0)
         .then(data => {
+            console.log(data,'checking reservation data')
             dispatch({type: 'setreservation', data: data});
             this.setState({
                 refreshing: false
@@ -85,7 +86,8 @@ class ReservationScreen extends Component{
 
     showBookingTime(reservation){
         var bookingtime = new Date(reservation.booking_time);
-        return (bookingtime.getUTCHours() - 12 )+":00 PM - " + (bookingtime.getUTCHours() - 11) + ":00 PM";
+        return (bookingtime.getHours() )+":00 PM - " + (bookingtime.getHours()) + ":00 PM";
+        // return (bookingtime.getHours() )+":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) +" PM - " + (bookingtime.getHours() + 1 ) + ":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes())+"PM";
     }
 
     render(){

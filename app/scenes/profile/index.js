@@ -20,7 +20,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar,RefreshControl } from 'react-native';
+import { StatusBar,RefreshControl, AsyncStorage } from 'react-native';
 import { API } from '../../constants/api';
 import { getProfile } from '../../actions';
 
@@ -43,6 +43,7 @@ class ProfileScreen extends Component{
         getProfile(user.token)
         .then(data => {
             dispatch({type: 'setprofile', data: data});
+            AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));            
             this.setState({
                 refreshing: false
             })
@@ -70,8 +71,10 @@ class ProfileScreen extends Component{
     showInterest(){
         var interests = this.props.user.interests;
         var ret = '';
-        for(var i = 0; i < interests.length; i++){
-            ret +=interests[i].id.name + ", "
+        if(interests != undefined && interests[0] != null){
+            for(var i = 0; i < interests.length; i++){
+                ret +=interests[i].id.name + ", "
+            }
         }
 
         if(ret.length > 0){
@@ -126,7 +129,7 @@ class ProfileScreen extends Component{
                         />
                     }>
                     <Body>
-                        <Thumbnail source={require('../../assets/1.png')} style={styles.image}/>
+                        <Thumbnail source={require('../../assets/profile.png')} style={styles.image}/>
                         <Text style={styles.basicText}>{this.props.user.name}, {this.showAge()}</Text>
                         <Text style={styles.locationText}>Berlin, Germany</Text>
                     </Body>
@@ -139,13 +142,13 @@ class ProfileScreen extends Component{
                         {this.showInterest()}
                     </Text>: null}
                     <View style={styles.divider}/>
-                    <Text style={styles.verifyText}>
+                    {/* <Text style={styles.verifyText}>
                         Verified Info
                     </Text>
                     <Text style={styles.interestText1}>
                         {this.showVerifiedInfo()}
-                    </Text>
-                    <View style={styles.divider}/>
+                    </Text> */}
+                    {/* <View style={styles.divider}/> */}
                     <List style={styles.list}>
                         <ListItem style={styles.listItem} onPress={() => this.onList()}>
                             <Body>

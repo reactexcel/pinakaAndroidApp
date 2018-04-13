@@ -52,6 +52,7 @@ class ReservationDetailScreen extends Component{
     showBookingTime(reservation){
         var bookingtime = new Date(reservation.booking_time);
         return (bookingtime.getUTCHours() - 12 )+":00 PM - " + (bookingtime.getUTCHours() - 11) + ":00 PM";
+        // return (bookingtime.getHours())+":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) + "-" + (bookingtime.getHours() + 1) + ":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) ;
     }
 
     onCancel(){
@@ -61,7 +62,7 @@ class ReservationDetailScreen extends Component{
         });
 
         var { token,  dispatch } = this.props;
-        cancelReservation(token, this.state.reservation._id)
+        cancelReservation(token, this.state.reservation._id,this.state.reservation.feed_id.heading)
         .then(data => {
             //hide indicator
             this.setState({

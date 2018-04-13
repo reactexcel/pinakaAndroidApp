@@ -30,7 +30,7 @@ class SplashScreen extends Component{
         return (
             <Container style={styles.container}>
                 <View style={styles.mainContainer}>
-                    <Thumbnail square source={require('../../assets/logo_large.png')} style={styles.logo}/>
+                    <Thumbnail square source={require('../../assets/logoWhite-large.png')} style={styles.logo}/>
                 </View>
             </Container>
         )

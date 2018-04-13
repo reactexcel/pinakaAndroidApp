@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, Dimensions, Keyboard } from 'react-native';
+import { StatusBar, Dimensions, Keyboard, ToastAndroid } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
@@ -44,7 +44,7 @@ class PhoneSignupScreen extends Component{
             progress: 1,
             step: 0,
             hidePass: true,
-            date: moment().format("YYYY-MM-D"),
+            date: moment().format("MM-D"),
             showDatePicker: false,
             gender: true,
             marital: false,
@@ -223,19 +223,20 @@ class PhoneSignupScreen extends Component{
                     isError: true,
                     errorText: 'Please input your zipcode.'
                 });
-            }else{
-                this.setState({
-                    progress: this.state.progress + progress,
-                    step: this.state.step + step
-                });
             }
-        }else{
-            if(this.state.password == ''){
-                this.setState({
-                    isError: true,
-                    errorText: 'Please input your password.'
-                });
-            }else{
+        //     else{
+        //         this.setState({
+        //             progress: this.state.progress + progress,
+        //         });
+        //     }
+        // }else{
+        //     if(this.state.password == ''){
+        //         this.setState({
+        //             isError: true,
+        //             errorText: 'Please input your password.'
+        //         });
+        //     }
+            else{
                 //sign up
                 var { dispatch } = this.props;
 
@@ -252,7 +253,6 @@ class PhoneSignupScreen extends Component{
                     gender: this.state.gender,
                     marital: this.state.marital,
                     kids: this.state.kids,
-                    password: this.state.password,
                     interests: this.props.navigation.state.params.interest
                 };
 
@@ -299,9 +299,16 @@ class PhoneSignupScreen extends Component{
                     }else{
                         console.log('2')
                         //save token
-                        AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
-                        dispatch({type: 'setprofile', data: data});
-                        dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        // AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                        // dispatch({type: 'setprofile', data: data});
+                        // dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                        // dispatch(NavigationActions.navigate({routeName: 'phonelogin'}));
+                        Alert.alert('Thank you for joining our rewards program!',
+                        'You are on your way to entertainment deals. Check out what new and come have some fun today!. We sent an email to the email address provided. Please confirm to complete your new account.',[
+                        {text:'OK',onPress:()=>{
+                            dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
+                        }]);
                     }
                 })
                 .catch(err => {
@@ -476,7 +483,7 @@ class PhoneSignupScreen extends Component{
                                         date={this.state.date}
                                         mode="date"
                                         placeholder="Select your birthday"
-                                        format="YYYY-MM-DD"
+                                        format="MM-DD"
                                         confirmBtnText="Done"
                                         cancelBtnText="Cancel"
                                         onDateChange={(date) => this.setState({date: date})}

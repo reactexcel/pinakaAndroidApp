@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, Dimensions, AsyncStorage, Keyboard } from 'react-native';
+import { StatusBar, Dimensions, AsyncStorage, Keyboard, ToastAndroid, Alert } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
@@ -46,7 +46,7 @@ class EmailSignupScreen extends Component{
             marital: false,
             kids: false,
             email: "",
-            birthday: moment().format("YYYY-MM-D"),
+            birthday: moment().format("MM-D"),
             zipcode: "",
             password: "",
             showDatePicker: false,
@@ -79,18 +79,20 @@ class EmailSignupScreen extends Component{
                     isError: true,
                     errorText: 'Please enter your zipcode.'
                 });
-            } else{
-                this.setState({
-                    progress: this.state.progress + 1
-                });
-            }
-        }else{
-            if(this.state.password == ''){
-                this.setState({
-                    isError: true,
-                    errorText: 'Please enter password'
-                });
-            }else{
+            } 
+        //     else{
+        //         this.setState({
+        //             progress: this.state.progress + 1
+        //         });
+        //     }
+        // }else{
+        //     if(this.state.password == ''){
+        //         this.setState({
+        //             isError: true,
+        //             errorText: 'Please enter password'
+        //         });
+        //     }
+            else{
                 //onSign Up
 
                 //show Indicator
@@ -132,29 +134,36 @@ class EmailSignupScreen extends Component{
                                 this.setState({
                                     isError: true,
                                     errorText: 'This phone number already used, Pleae try again.',
-                                    progress: 2
+                                    progress: 1
                                 })
                                 break;
                             case API.RESPONSE.SIGNUP.INVALIDEMAIL:
                                 this.setState({
                                     isError: true,
                                     errorText: 'This email is invalid now. Please try again.',
-                                    progress: 2
+                                    progress: 1
                                 });
                                 break;
                             case API.RESPONSE.SIGNUP.INVALIDZIPCODE:
                                 this.setState({
                                     isError: true,
                                     errorText: 'This zipcode is invalid now. Please try again',
-                                    progress: 2
+                                    progress: 1
                                 });
                                 break;
                         }
                     }else{
                         //save token
-                        AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
-                        dispatch({type: 'setprofile', data: data});
-                        dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        // AsyncStorage.setItem('user', JSON.stringify({data:data,loginType:'login'}));
+                        // dispatch({type: 'setprofile', data: data});
+                        // dispatch(NavigationActions.navigate({routeName: 'tab'}));
+                        // ToastAndroid.showWithGravity('Please Check You Email For Password.', ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                        // dispatch(NavigationActions.navigate({routeName: 'emaillogin'}));
+                        Alert.alert('Thank you for joining our rewards program!',
+                        'You are on your way to entertainment deals. Check out what new and come have some fun today!. We sent an email to the email address provided. Please confirm to complete your new account.',[
+                        {text:'OK',onPress:()=>{
+                            dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
+                        }]);
                     }
                 })
                 .catch(err => {
@@ -271,7 +280,7 @@ class EmailSignupScreen extends Component{
                                         date={this.state.birthday}
                                         mode="date"
                                         placeholder="Select your birthday"
-                                        format="YYYY-MM-DD"
+                                        format="MM-DD"
                                         confirmBtnText="Done"
                                         cancelBtnText="Cancel"
                                         onDateChange={(date) => this.setState({birthday: date})}

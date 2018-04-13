@@ -66,7 +66,7 @@ class AlertCheck extends Component{
                         })}
                     </List>
                     <View style={styles.bottomContainer}>
-                        <Button transparent style={styles.btnstyle} onPress={this.props.onCancel}>
+                        <Button transparent style={styles.cancelbtnstyle} onPress={this.props.onCancel}>
                             <Text style={styles.btnText}>DECLINE</Text>
                         </Button>
                         <Button transparent style={styles.btnstyle} onPress={ () => this.onDone()}>

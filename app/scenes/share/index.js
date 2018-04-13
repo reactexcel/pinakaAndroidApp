@@ -20,7 +20,7 @@ import { API } from '../../constants/api';
 
 class ShareScreen extends Component{
     static navigationOptions = {
-        header: null
+        header: null    
     }
 
     onBack(){

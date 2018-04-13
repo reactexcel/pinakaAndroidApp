@@ -22,7 +22,7 @@ import { StatusBar, AsyncStorage } from 'react-native';
 import AlertCheck from '../../components/alertcheck/';
 import PLoading from '../../components/loading';
 import splash from '../splash/index';
-import { searchUser,emailLogin } from '../../actions';
+import { searchUser,emailLogin,faccebookLogin } from '../../actions';
 import welcome from '../welcome/index';
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -68,7 +68,7 @@ class AuthScreen extends Component{
       var { dispatch } = this.props;
       var  interest = this.props.navigation.state.params.interest;
       try {
-      LoginManager.logInWithReadPermissions(['email','public_profile']).then(
+      LoginManager.logInWithReadPermissions(['public_profile','pages_messaging_phone_number','user_relationships']).then(
       (result) => {
         if (result.isCancelled) {
           console.log('Login cancelled');
@@ -76,16 +76,18 @@ class AuthScreen extends Component{
           AccessToken.getCurrentAccessToken().then(
             (data) => {
               // getting facebook user data
-              console.log(data);
-                fetch('https://graph.facebook.com/v2.8/me?fields=email,name&access_token=' + data.accessToken)
+              console.log(data,"asdasdasd");
+                fetch('https://graph.facebook.com/v2.8/me?fields=email,gender,locale,age_range,relationship_status,birthday,name&access_token=' + data.accessToken)
                 .then((response) => response.json())
                 .then((json) => {
-                  console.log(json);
+                  console.log(json,'asdasd=========');
                   // Some user object has been set up somewhere, build that user here
                   const user = [];
                   user.name = json.name;
                   user.id = json.id;
                   user.email = json.email;
+                  user.gender = json.gender;
+                  user.birthday = json.birthday;
                   user.username = json.name;
                   searchUser(user).then(data => {
                     console.log(data);
@@ -93,7 +95,7 @@ class AuthScreen extends Component{
                       this.setState({isLoading:false});
                       dispatch(NavigationActions.navigate({routeName: 'facebooksignup', params: {user: user,interest: interest}}));
                     }else if(data.status == 1){
-                      emailLogin(user.email, user.id)
+                        faccebookLogin(user.email, user.id)
                       .then(data => {
                           console.log(data);
                           //hide indicator
@@ -217,7 +219,7 @@ class AuthScreen extends Component{
                     </Right>
                 </Header>
                 <View style={styles.mainContainer}>
-                    <Thumbnail square source={require('../../assets/logo_large.png')} style={styles.logo}/>
+                    <Thumbnail square source={require('../../assets/logoWhite-large.png')} style={styles.logo}/>
                     {this.props.navigation.state.params.type == 'login'?
                     <Text style={styles.text}>
                         Welcome back.
