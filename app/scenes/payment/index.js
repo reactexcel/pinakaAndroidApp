@@ -86,6 +86,8 @@ class PaymentScreen extends Component{
         if(this.state.lines + delta > 0 && this.state.lines + delta <= 5 ){
             this.setState({
                 lines: this.state.lines + delta
+            },()=>{
+                this.rateCalculate();
             });
         } else if(this.state.lines + delta > 5) {
             this.setState({
@@ -214,127 +216,19 @@ class PaymentScreen extends Component{
         });
     }
 
-    // onValueChange(value){
-    //     // this.setState({total_hour:value},
-    //     // ()=>{
-    //     //     this.rateCalculate('hour',delta)
-    //     // }
-    //     // );
-    //     this.rateCalculate('hours', value )
-    // }
+    rateCalculate(){
+        //-----------------lines-------------
+        let { lines, rate, original_rate } = this.state;
 
-    // rateCalculate(key,value){
-    //     let { peoples, lines, total_hour, rate, original_rate } = this.state;
-    //     console.log(value ,Math.floor((peoples - 5) / 3))
-    //     let tempHour;
-    //     switch(total_hour){
-    //         case 60:
-    //         tempHour = 1;
-    //         break;
-    //         case 120:
-    //         tempHour = 2 ;
-    //         break;
-    //         case 180:
-    //         tempHour = 3 ;
-    //         break;
-    //         case 240:
-    //         tempHour = 4 ;
-    //         break;
-    //     }
-    //     //---------------people----------------
-    //     if(key==="people" && value > 7 && ((value - 5) % 3 === 0)){
-    //         peoples = value;
-    //         rate = tempHour * (original_rate + original_rate * Math.floor((value - 5) / 3))
-    //     }else if(key==="people" && value < 8){
-    //         peoples = value
-    //         rate = tempHour * (original_rate)
-    //     }else if(key==="people"){
-    //         peoples = value
-    //     }
-    //     //-----------------lines-------------
-    //     if(key==="lines" && value > 1 ){
-    //         lines = value;
-    //         let calValue = lines;
-    //         let caltime
-    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
-    //             calValue += Math.floor((peoples - 5) / 3)
-    //         }
-    //         if(tempHour > 1) {
-    //             caltime += tempHour
-    //         }
-    //         console.log(lines , calValue ,'check')
-    //         console.log(original_rate + original_rate * calValue)
-    //         console.log((tempHour*(original_rate + original_rate * lines)))
-    //         console.log(Math.floor((peoples - 5) / 3));
-    //         console.log((peoples - 5)/3)
-    //         console.log( (tempHour*(original_rate + original_rate * lines)) * Math.floor((peoples-5)/3) )
-    //         rate = (tempHour*(original_rate + original_rate * lines))
-    //     }else if(key==="lines" && value == 1){
-    //         lines = value
-    //         let calValue = lines;
-    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
-    //             calValue += Math.floor((peoples - 5) / 3)
-    //         }
-    //         if(tempHour > 1) {
-    //             calValue += tempHour
-    //         }
-    //         rate = tempHour * (original_rate * calValue)
-    //     }else if(key==="lines"){
-    //         lines = value
-    //     }
-    //     //------------hours------------------
-    //     if(key == 'hours'){
+        rate = original_rate * lines;
 
-    //         switch(value){
-    //             case 60:
-    //             tempHour = 1;
-    //             break;
-    //             case 120:
-    //             tempHour = 2 ;
-    //             break;
-    //             case 180:
-    //             tempHour = 3 ;
-    //             break;
-    //             case 240:
-    //             tempHour = 4 ;
-    //             break;
-    //         }
-    //     }
 
-    //     if(key==="hours" && tempHour > 1){
-    //         total_hour = value;
-    //         let calValue = tempHour;
-    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
-    //             calValue += Math.floor((peoples - 5) / 3)
-    //         }
-    //         if(lines > 1) {
-    //             calValue += lines
-    //         }
-    //         rate = original_rate + original_rate * calValue
-    //     }else if(key==="hours" && tempHour == 1){
-    //         total_hour = value
-    //         let calValue = tempHour;
-    //         if(((peoples - 5) % 3 === 0) && peoples >= 8 ){
-    //             calValue += Math.floor((peoples - 5) / 3)
-    //         }
-    //         if(lines > 1) {
-    //             calValue += lines
-    //         }
-    //         rate = original_rate * calValue;
-    //     }else if(key==="hours"){
-    //         total_hour = value
-    //     }
         
+        this.setState({
+            rate
+        })
         
-        
-    //     this.setState({
-    //         peoples,
-    //         lines,
-    //         total_hour,
-    //         rate
-    //     })
-        
-    // }
+    }
 
     onSchedule(){
         var { dispatch } = this.props;

@@ -22,7 +22,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar, Dimensions, Keyboard, ToastAndroid } from 'react-native';
+import { StatusBar, Dimensions, Keyboard, ToastAndroid, Alert } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import EDialog from '../../components/edialog';
 import { API } from '../../constants/api';
@@ -126,35 +126,43 @@ class PhoneSignupScreen extends Component{
                 this.setState({
                     isLoading: true
                 });
+                if(this.state.phone.length != 10){
+                    this.setState({
+                        isLoading:false,
+                        isError:true,
+                        errorText:'Phone Number Should be 10 digit' 
+                    })
 
-                sendCode(this.state.phone)
-                .then(data => {
-                    if(data.code != undefined){
-                        if(data.code == API.RESPONSE.SENDCODE.INVALIDPHONE){
+                } else {
+                    sendCode(this.state.phone)
+                    .then(data => {
+                        if(data.code != undefined){
+                            if(data.code == API.RESPONSE.SENDCODE.INVALIDPHONE){
+                                this.setState({
+                                isLoading: false,
+                                isError: true,
+                                errorText: 'Invalid Phone number. Please try again.'
+                                });
+                            }
+                        }else{
+                            //hide Indicator
                             this.setState({
-                               isLoading: false,
-                               isError: true,
-                               errorText: 'Invalid Phone number. Please try again.'
+                                isLoading: false,
+                                verifytoken: data.token,
+                                progress: this.state.progress + progress,
+                                step: this.state.step + step
                             });
                         }
-                    }else{
+                    })
+                    .catch(err => {
                         //hide Indicator
                         this.setState({
                             isLoading: false,
-                            verifytoken: data.token,
-                            progress: this.state.progress + progress,
-                            step: this.state.step + step
+                            isError: true,
+                            errorText: 'Invalid Code. Pleasey try again.'
                         });
-                    }
-                })
-                .catch(err => {
-                    //hide Indicator
-                    this.setState({
-                        isLoading: false,
-                        isError: true,
-                        errorText: 'Invalid Code. Pleasey try again.'
                     });
-                });
+                }
             }
         }else if(this.state.step == 1){
             if(this.state.code == ""){
@@ -307,7 +315,7 @@ class PhoneSignupScreen extends Component{
                         Alert.alert('Thank you for joining our rewards program!',
                         'You are on your way to entertainment deals. Check out what new and come have some fun today!. We sent an email to the email address provided. Please confirm to complete your new account.',[
                         {text:'OK',onPress:()=>{
-                            dispatch(NavigationActions.navigate({routeName: 'emaillogin'}))}
+                            dispatch(NavigationActions.navigate({routeName: 'phonelogin'}))}
                         }]);
                     }
                 })

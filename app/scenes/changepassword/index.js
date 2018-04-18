@@ -116,6 +116,12 @@ class ChangePassword extends Component{
                                 errorText: 'Please Enter Correct Old Password'
                             });
                             break;
+                        case API.RESPONSE.PASSWORD.INVALIDNEWPASSWORD:
+                            this.setState({
+                                isError : true,
+                                errorText: 'Invalid Password Format'
+                            });
+                            break;
                     }
                 } else {
                     
@@ -207,7 +213,7 @@ class ChangePassword extends Component{
                 </View>
                 <Content>
                     <Text style={styles.text}>Change password.</Text>
-                    <Text style={styles.text1}>Your password must include at least one symbol and be eight or more characters long</Text>
+                    <Text style={styles.text1}>Your password must include at least one number, one letter, one symbol and be eight or more characters long</Text>
                     <Form style={styles.formContainer}>
                         <Item stackedLabel style={styles.formItemContainer}>
                             {this.state.hideOldPass?

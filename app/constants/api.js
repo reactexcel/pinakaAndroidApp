@@ -2,7 +2,7 @@ export const API = {
     SERVER: 'https://pinaka.herokuapp.com/',
     // SERVER_DEV_URL: 'https://pinaka.herokuapp.com/api/',//http://54.88.40.46:3000/api/
     SERVER_DEV_URL: 'http://5.9.144.226:5005/api/',//http://54.88.40.46:3000/api/
-    // SERVER_DEV_URL: 'http://192.168.1.11:5005/api/',//http://54.88.40.46:3000/api/
+    // SERVER_DEV_URL: 'http://192.168.1.10:5005/api/',//http://54.88.40.46:3000/api/
     // SERVER_DEV_URL: 'https://sheltered-atoll-47991.herokuapp.com/api/',//http://54.88.40.46:3000/api/
     // SERVER: 'https://sheltered-atoll-47991.herokuapp.com/',
     SERVER_PUB_URL: 'http://pinaka.us-3.evennode.com/api/',
@@ -40,6 +40,7 @@ export const API = {
         PASSWORD:{
             NOTMATCH: 2,
             EMPTYEMAIL: 0,
+            INVALIDNEWPASSWORD:4
         },
         LOGIN: {
             EMPTYEMAIL: 0,

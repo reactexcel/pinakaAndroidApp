@@ -70,7 +70,7 @@ function createCardToken( params){
           method: "POST",
           headers: {
               "Content-Type": "application/x-www-form-urlencoded",
-              "Authorization": "Bearer pk_test_ZzuihzJ5AbhsxU9RgGE9UQkk"
+              "Authorization": "Bearer pk_live_LlPSvMMjuPTId8RS2sRhN8A7"
           },
       })
       .then((res) => res.json())

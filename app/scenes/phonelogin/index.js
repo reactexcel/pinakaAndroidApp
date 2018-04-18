@@ -62,31 +62,40 @@ class PhoneLoginScreen extends Component{
             this.setState({
                 isLoading: true
             });
-            Keyboard.dismiss();
-            sendCode(this.state.phone)
-            .then(data => {
-                if(data.code != undefined){
+            if(this.state.phone.length != 10){
+                this.setState({
+                    isLoading:false,               
+                    isError:true,
+                    errorText:'Phone Number Should be 10 digit' 
+                })
+            }
+            else {
+                Keyboard.dismiss();
+                sendCode(this.state.phone)
+                .then(data => {
+                    if(data.code != undefined){
+                        this.setState({
+                            isLoading: false,
+                            isError: true,
+                            errorText: 'Invalid Phone number. Please try again.'
+                        });
+                    }else{
+                        //hide Indicator
+                        this.setState({
+                            isLoading: false
+                        });
+                        dispatch(NavigationActions.navigate({routeName: 'phonecode', params: {token: data.token, phoneNumber: this.state.phone}}));
+                    }
+                })
+                .catch(err => {
+                    //hide indicator
                     this.setState({
                         isLoading: false,
                         isError: true,
-                        errorText: 'Invalid Phone number. Please try again.'
+                        errorText: 'Please check wifi or internet.'
                     });
-                }else{
-                    //hide Indicator
-                    this.setState({
-                        isLoading: false
-                    });
-                    dispatch(NavigationActions.navigate({routeName: 'phonecode', params: {token: data.token, phoneNumber: this.state.phone}}));
-                }
-            })
-            .catch(err => {
-                //hide indicator
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                    errorText: 'Please check wifi or internet.'
                 });
-            });
+            }
         }
     }
 

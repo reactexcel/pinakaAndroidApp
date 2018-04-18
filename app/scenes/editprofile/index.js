@@ -52,7 +52,7 @@ class EditProfileScreen extends Component{
             name: props.user? props.user.name:"",
             zipcode: props.user?props.user.zipcode:"",
             email: props.user?(props.user.email?props.user.email: ""): "",
-            phone: props.user?(props.user.phone?props.user.phone.substring(2, props.user.phone.length): ""): "",
+            phone: props.user?(props.user.phone.length > 10?props.user.phone.substring(2, props.user.phone.length): props.user.phone ): props.user.phone ,
             isLoading: false,
             isError: false,
             errorText: ""
