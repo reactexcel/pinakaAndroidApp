@@ -41,7 +41,6 @@ class EditProfileScreen extends Component{
 
     constructor(props){
         super(props);
-
         this.state = {
             gender: props.user? (props.user.gender == 1?true: false): false,
             marital: props.user? (props.user.marital == 1? true: false): false,
@@ -52,7 +51,7 @@ class EditProfileScreen extends Component{
             name: props.user? props.user.name:"",
             zipcode: props.user?props.user.zipcode:"",
             email: props.user?(props.user.email?props.user.email: ""): "",
-            phone: props.user?(props.user.phone.length > 10?props.user.phone.substring(2, props.user.phone.length): props.user.phone ): props.user.phone ,
+            phone: props.user.phone?(props.user.phone.length > 10?props.user.phone.substring(2, props.user.phone.length): props.user.phone ): '' ,
             isLoading: false,
             isError: false,
             errorText: ""

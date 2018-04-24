@@ -80,22 +80,34 @@ class ScheduleScreen extends Component{
         switch(index){
             case 0:
                 this.setState({
-                    time1: !this.state.time1
+                    time1: !this.state.time1,
+                    time2: false,
+                    time3: false,
+                    time4: false
                 });
                 break;
             case 1:
                 this.setState({
-                    time2: !this.state.time2
+                    time2: !this.state.time2,
+                    time1: false,
+                    time3: false,
+                    time4: false
                 });
                 break;
             case 2:
                 this.setState({
-                    time3: !this.state.time3
+                    time3: !this.state.time3,
+                    time2: false,
+                    time1: false,
+                    time4: false
                 });
                 break;
             case 3:
                 this.setState({
-                    time4: !this.state.time4
+                    time4: !this.state.time4,
+                    time2: false,
+                    time3: false,
+                    time1: false
                 });
                 break;
         }
