@@ -20,18 +20,22 @@ function getReservation(token, status){
     });
 }
 
-function createReservation(token, params){
+function createReservation(token, params,paymentId){
     var formData = new FormData();
     formData.append("token", token);
     formData.append("feed_id", params.feed_id);
+    formData.append("actual_price", params.actual_price);
     formData.append('people_count', params.people_count);
     formData.append('lane_count', params.lane_count);
     formData.append('booking_time', params.booking_time);
     formData.append('purchase_amount', params.purchase_amount);
+    formData.append('article', params.reservation_for);
     formData.append('number', params.number),
     formData.append('cvv', params.cvv);
     formData.append('expired_m', params.expired_m);
     formData.append('expired_y', params.expired_y);
+    formData.append('paymentId', paymentId);
+    formData.append('showTime', params.showTime);
 
     return new Promise((resolve, reject) => {
         fetch(API.SERVER_DEV_URL + 'reservation', {

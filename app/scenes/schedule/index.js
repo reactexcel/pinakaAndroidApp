@@ -122,6 +122,7 @@ class ScheduleScreen extends Component{
 
     render(){
         StatusBar.setBarStyle('light-content');
+        console.log(this.state.dates, '********************')
         return (
             <Container style={styles.container}>
                 <Header style={styles.header}>

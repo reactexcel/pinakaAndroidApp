@@ -40,7 +40,6 @@ class PaymentScreen extends Component{
 
     constructor(props){
         super(props);
-        console.log(this.props.navigation.state.params.feed,'54654654654654')
         this.state = {
             peoples: 5,
             lines: 1,
@@ -107,7 +106,16 @@ class PaymentScreen extends Component{
             paymentmethod: index
         });
     }
-
+    showTime(){
+        const { hours } = this.props.navigation.state.params;
+        let showTime;
+        _.map(hours, (val, i) => {
+            if(val){
+                showTime = API.BOOKINGTIME[i];
+            }
+        })
+        return showTime;
+    }
     onPay(){
         if(this.props.user.creditcards && this.props.user.creditcards[0]!= undefined){
             //show Indicator
@@ -120,10 +128,10 @@ class PaymentScreen extends Component{
                 expired_y: this.props.user.creditcards[this.state.paymentmethod].expired_y,
                 cvv: this.props.user.creditcards[this.state.paymentmethod].cvv,
                 amount:this.props.navigation.state.params.feed.discounted_cost,
-                // id: this.props.navigation.state.params.card._id
             };
 
             var { token, dispatch } = this.props;
+            const showTime = this.showTime();
             var params = {
                 feed_id: this.props.navigation.state.params.feed._id,
                 people_count: this.state.peoples,
@@ -132,23 +140,21 @@ class PaymentScreen extends Component{
                 article:this.props.navigation.state.params.feed.heading,
                 reservation_for:this.props.navigation.state.params.feed.heading,
                 reservation_hours:this.state.total_hour,
-                // booking_time: this.state.reservationDate + " " + this.state.reservationTime,
+                showTime: showTime,
                 booking_time: moment(this.props.navigation.state.params.date).format('YYYY-MM-D') + " " + (17 + (this.props.navigation.state.params.hours[0]==true?0:(this.props.navigation.state.params.hours[1]==true?1:(this.props.navigation.state.params.hours[2]==true?2:3))))+ ":00:00",
-                purchase_amount: this.props.navigation.state.params.feed.discounted_cost,
+                purchase_amount: this.state.rate,
                 number: this.props.user.creditcards[this.state.paymentmethod].number,
                 cvv: this.props.user.creditcards[this.state.paymentmethod].cvv,
                 expired_m: this.props.user.creditcards[this.state.paymentmethod].expired_m,
                 expired_y: this.props.user.creditcards[this.state.paymentmethod].expired_y
-            };
-
-                
+            };                
 
             createCardToken(cardDetails).then(data => {
-              console.log(data,'card data');
               const paymentData = {data:data,amount:this.props.navigation.state.params.feed.discounted_cost,currency:'USD',description:'payment'}
               cardPay(paymentData).then(response => {
                 if(response.error === 0){
-                createReservation(token, params)
+                    paymentId = response.charges.id;
+                createReservation(token, params,paymentId)
                 .then(data => {
                     if(data.code != undefined){
                         switch(data.code){
@@ -173,8 +179,7 @@ class PaymentScreen extends Component{
                         });
                         var reservationDATA = JSON.parse(JSON.stringify(data));
                         reservationDATA['feed_id'] = this.props.navigation.state.params.feed;
-                        console.log(reservationDATA);
-                        dispatch(NavigationActions.navigate({routeName: 'reservationdetail', params: { reservation: reservationDATA }}));
+                        dispatch(NavigationActions.navigate({routeName: 'reservationdetail', params: { reservation: reservationDATA , showTime : showTime }}));
                     }
                 })
                 .catch(err => {

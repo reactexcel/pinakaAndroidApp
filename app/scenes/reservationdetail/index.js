@@ -51,7 +51,7 @@ class ReservationDetailScreen extends Component{
 
     showBookingTime(reservation){
         var bookingtime = new Date(reservation.booking_time);
-        return (bookingtime.getUTCHours() - 12 )+":00 PM - " + (bookingtime.getUTCHours() - 11) + ":00 PM";
+        return (bookingtime.getUTCHours()  )+":00 PM - " + (bookingtime.getUTCHours() ) + ":00 PM";
         // return (bookingtime.getHours())+":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) + "-" + (bookingtime.getHours() + 1) + ":"+(bookingtime.getMinutes() <10 ? "0"+bookingtime.getMinutes() : bookingtime.getMinutes()) ;
     }
 
@@ -107,7 +107,7 @@ class ReservationDetailScreen extends Component{
                     </Text>
                     <Text style={styles.locationText}><Icon name="pin" style={styles.pinIcon}/>  Boronia St & Anzac Parade, NSW 2033</Text>
                     <Text style={styles.dateText}>{moment(this.state.reservation.booking_time).format("dddd, D MMM, YYYY")}</Text>
-                    <Text style={styles.timeText}>{this.showBookingTime(this.state.reservation)}</Text>
+                    <Text style={styles.timeText}>{this.props.navigation.state.params.showTime}</Text>
                     <View style={styles.divider}/>
                     <Text style={styles.qrText}>
                         QR - Code

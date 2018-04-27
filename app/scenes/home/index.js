@@ -209,10 +209,14 @@ class HomeScreen extends Component{
                                             </Button>
                                         </Thumbnail>
                                         <View style={styles.itemPriceContainer}>
+                                           <View style={{flex:1}} >
                                             <Text style={styles.itemPriceText1}>{feed.heading}</Text>
+                                           </View>
+                                           <View >                                            
                                             <Text style={styles.itemPriceText1}>
                                                 <Text style={styles.itemPriceText2}>${feed.original_cost.toFixed(2)}</Text>   ${feed.discounted_cost.toFixed(2)}
                                             </Text>
+                                           </View>                                            
                                         </View>
                                         <Text style={styles.itemTimeText}>{this.showEstimate(feed.expired_date)}</Text>
                                     </Body>

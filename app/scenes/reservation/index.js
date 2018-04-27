@@ -71,7 +71,7 @@ class ReservationScreen extends Component{
 
     onDetail(reservation){
         var { dispatch } = this.props;
-        dispatch(NavigationActions.navigate({routeName: 'reservationdetail', params: { reservation: reservation }}));
+        dispatch(NavigationActions.navigate({routeName: 'reservationdetail', params: { reservation: reservation, showTime: reservation.showTime }}));
     }
 
     isActive(reservation){
@@ -92,6 +92,7 @@ class ReservationScreen extends Component{
 
     render(){
         StatusBar.setBarStyle('light-contnet');
+        console.log('11111111111111111111',this.props, '111111111111111')
         return (
             <Container style={styles.container}>
                 <Header style={styles.header}>
@@ -129,7 +130,7 @@ class ReservationScreen extends Component{
                                         <Body>
                                             <Text style={styles.itemTitle}>{reservation.feed_id.heading}</Text>
                                             <Text style={styles.itemDateText}>{moment(reservation.booking_time).format('D MMMM, YYYY')}</Text>
-                                            <Text style={styles.itemTimeText}>{this.showBookingTime(reservation)}</Text>
+                                            <Text style={styles.itemTimeText}>{reservation.showTime}</Text>
                                         </Body>
                                         <Right>
                                             <Icon style={styles.itemRightIcon} name="ios-arrow-forward"/>

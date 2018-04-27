@@ -59,18 +59,15 @@ function createCardToken( params){
   if(params.amount === undefined){
     params.amount = 444;
   }
-  console.log('createCardToken',params);
   var stripe_url = 'https://api.stripe.com/v1/';
-  var secret_key = 'sk_test_43l781B2lemmqcwCbHvmj15D';
+  var secret_key = 'sk_test_ve3CtLMbyeZWis0UROEhrF0V';
     let formBody = 'card[number]='+params.number+'&card[exp_month]='+params.expired_m+'&card[exp_year]='+params.expired_y+'&card[cvc]='+params.cvv+'&card[currency]='+params.currency;
-    console.log(stripe_url + 'tokens?'+formBody);
-    console.log('Bearer ' + secret_key);
   return new Promise((resolve, reject) => {
       fetch(stripe_url+'tokens?'+formBody , {
           method: "POST",
           headers: {
               "Content-Type": "application/x-www-form-urlencoded",
-              "Authorization": "Bearer pk_live_LlPSvMMjuPTId8RS2sRhN8A7"
+              "Authorization": "Bearer pk_test_kPpkH0eNDBswlRNj6HdjfdeN"
           },
       })
       .then((res) => res.json())
@@ -87,7 +84,6 @@ function createCardToken( params){
 
 function cardPay(data){
   const payload = {stripeToken:data.data.id,currency:data.currency,description:data.description,amount:data.amount};
-  console.log(payload,'payload');
   return new Promise((resolve, reject) => {
       fetch(API.SERVER_DEV_URL +'payment/stripe_payment',{
           method: "POST",
