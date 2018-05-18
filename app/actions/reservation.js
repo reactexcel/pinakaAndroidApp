@@ -2,7 +2,27 @@ import { API } from '../constants';
 
 function getReservation(token, status){
     return new Promise((resolve, reject) => {
-        fetch(API.SERVER_DEV_URL + 'reservation?token=' + token + '&status=' + status, {
+        fetch(API.SERVER_DEV_URL + 'reservation?token=' + token + '&status='   , {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((res) => res.json())
+        .then(data => {
+            console.log("getReservation API Success", data);
+            resolve(data);
+        })
+        .catch(err => {
+            console.log("getReservation API Error", err);
+            reject(err);
+        });
+    });
+}
+
+function getAllReservation(token, status){
+    return new Promise((resolve, reject) => {
+        fetch(API.SERVER_DEV_URL + 'reservation/all?token=' + token , {
             method: 'GET',
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -86,5 +106,6 @@ function cancelReservation(token, id, heading){
 module.exports = {
     getReservation,
     createReservation,
-    cancelReservation
+    cancelReservation,
+    getAllReservation
 };

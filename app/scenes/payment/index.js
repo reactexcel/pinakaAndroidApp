@@ -108,12 +108,13 @@ class PaymentScreen extends Component{
     }
     showTime(){
         const { hours } = this.props.navigation.state.params;
-        let showTime;
-        _.map(hours, (val, i) => {
-            if(val){
-                showTime = API.BOOKINGTIME[i];
-            }
-        })
+        let showTime='';
+        this.props.navigation.state.params.hours[0]? showTime= showTime +' '+ API.BOOKINGTIME[0] :showTime=showTime;
+        this.props.navigation.state.params.hours[1]?  showTime=showTime +' '+ API.BOOKINGTIME[1] :showTime=showTime;
+        this.props.navigation.state.params.hours[2]?  showTime=showTime +' '+ API.BOOKINGTIME[2] :showTime=showTime;
+        this.props.navigation.state.params.hours[3]?  showTime=showTime +' '+ API.BOOKINGTIME[3] :showTime=showTime;
+
+
         return showTime;
     }
     onPay(){
@@ -132,6 +133,9 @@ class PaymentScreen extends Component{
 
             var { token, dispatch } = this.props;
             const showTime = this.showTime();
+            console.log('====================================');
+            console.log(showTime);
+            console.log('====================================');
             var params = {
                 feed_id: this.props.navigation.state.params.feed._id,
                 people_count: this.state.peoples,
@@ -150,7 +154,7 @@ class PaymentScreen extends Component{
             };                
 
             createCardToken(cardDetails).then(data => {
-              const paymentData = {data:data,amount:this.props.navigation.state.params.feed.discounted_cost,currency:'USD',description:'payment'}
+              const paymentData = {data:data,amount:this.state.rate,currency:'USD',description:'payment'}
               cardPay(paymentData).then(response => {
                 if(response.error === 0){
                     paymentId = response.charges.id;
@@ -211,7 +215,7 @@ class PaymentScreen extends Component{
     }
 
     showDate(){
-        return moment(this.props.navigation.state.params.date).format('dddd, D MMMM, YYYY');
+        return moment(this.props.navigation.state.params.date).add(1,'days').format('dddd, D MMMM, YYYY');
     }
 
     onErrorClose(){
@@ -366,7 +370,7 @@ class PaymentScreen extends Component{
                         </ListItem>
                         <ListItem style={styles.listItem}>
                             <Body>
-                                <Text style={styles.listItemText}>Bowling lines</Text>
+                                <Text style={styles.listItemText}>Bowling Lanes</Text>
                             </Body>
                             <Right style={styles.right}>
                                 <Button transparent onPress={() => this.onCalLines(-1)}>

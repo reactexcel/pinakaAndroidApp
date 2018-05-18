@@ -56,7 +56,7 @@ function emailSignup(params){
       params.interests = '59b02c4a5ecd37001fe35074,1';
     }
     var formData = new FormData();
-    formData.append('name', 'Tester');
+    formData.append('name', 'User');
     formData.append('email', params.email);
     formData.append('birthday', params.birthday);
     formData.append('zipcode', params.zipcode);
@@ -90,14 +90,13 @@ function emailSignup(params){
 }
 
 function facebookSignup(params){
-    console.log(params,'===================');
     if(params.interests == undefined){
       params.interests = '59b02c4a5ecd37001fe35074,1';
     }
     var formData = new FormData();
     formData.append('name', params.name != '' ? params.name :'' );
     formData.append('email', params.email);
-    formData.append('birthday', params.birthday.toISOString());
+    formData.append('birthday',params.birthday);
     formData.append('zipcode', params.zipcode);
     formData.append('facebookId', params.id);
     formData.append('gender', params.gender?1:0);

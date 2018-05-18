@@ -58,15 +58,18 @@ class EditProfileScreen extends Component{
         };
 
         var interests = [];
-        for (var i = 0; i < props.user.interests.length; i++){
-            interests.push(props.user.interests[i].id.name);
+        if(props.user.interests != undefined && props.user.interests[0] != null && props.user.interests[0] != undefined ){
+            for (var i = 0; i < props.user.interests.length; i++){
+                interests.push(props.user.interests[i].id.name);
+            }
         }
         var temp = this.props.interests;
-	
-        for(var i = 0; i < interests.length; i++){
-            for(var j = 0; j < temp.length; j++){
-                if(interests[i] == temp[j].name){
-                    this.state.interests[j] = true;
+        if(temp != undefined && temp[0]!= null){
+            for(var i = 0; i < interests.length; i++){
+                for(var j = 0; j < temp.length; j++){
+                    if(interests[i] == temp[j].name){
+                        this.state.interests[j] = true;
+                    }
                 }
             }
         }
@@ -80,11 +83,11 @@ class EditProfileScreen extends Component{
     onSave(){
         //interests
         var newInterests = "";
-        for(var i = 0; i < this.state.interests.length; i++){
-            if(this.state.interests[i] == true){
-                newInterests += this.props.interests[i]._id + ",1:";
+            for(var i = 0; i < this.state.interests.length; i++){
+                if(this.state.interests[i] == true){
+                    newInterests += this.props.interests[i]._id + ",1:";
+                }
             }
-        }
         if(newInterests != ''){
             newInterests = newInterests.substring(0, newInterests.length - 1);
         }

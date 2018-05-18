@@ -60,14 +60,14 @@ function createCardToken( params){
     params.amount = 444;
   }
   var stripe_url = 'https://api.stripe.com/v1/';
-  var secret_key = 'sk_test_ve3CtLMbyeZWis0UROEhrF0V';
+  var secret_key = 'sk_live_ib6BSc0XCCfMX1BONJi3ksu9';
     let formBody = 'card[number]='+params.number+'&card[exp_month]='+params.expired_m+'&card[exp_year]='+params.expired_y+'&card[cvc]='+params.cvv+'&card[currency]='+params.currency;
   return new Promise((resolve, reject) => {
       fetch(stripe_url+'tokens?'+formBody , {
           method: "POST",
           headers: {
               "Content-Type": "application/x-www-form-urlencoded",
-              "Authorization": "Bearer pk_test_kPpkH0eNDBswlRNj6HdjfdeN"
+              "Authorization": "Bearer pk_live_LlPSvMMjuPTId8RS2sRhN8A7"
           },
       })
       .then((res) => res.json())

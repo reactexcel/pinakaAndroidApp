@@ -64,12 +64,16 @@ class AuthScreen extends Component{
     }
 
     onFacebookLogin(){
+        console.log('facebook login')
       this.setState({isLoading:true});
       var { dispatch } = this.props;
       var  interest = this.props.navigation.state.params.interest;
       try {
-      LoginManager.logInWithReadPermissions(['public_profile','pages_messaging_phone_number','user_relationships']).then(
+          console.log('check')
+          LoginManager.logOut();
+      LoginManager.logInWithReadPermissions(['public_profile']).then(
       (result) => {
+          console.log('result********************')
         if (result.isCancelled) {
           console.log('Login cancelled');
         } else {
@@ -97,7 +101,7 @@ class AuthScreen extends Component{
                     }else if(data.status == 1){
                         faccebookLogin(user.email, user.id)
                       .then(data => {
-                          console.log(data);
+                          console.log(data,'**************************');
                           //hide indicator
                           // this.setState({
                           //     isLoading: false
@@ -131,6 +135,7 @@ class AuthScreen extends Component{
                       })
                       .catch(err => {
                           console.log(err);
+                       
                           //hide indicator
                           this.setState({
                               isLoading: false,

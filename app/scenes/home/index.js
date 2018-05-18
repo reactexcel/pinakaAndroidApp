@@ -19,7 +19,7 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
-import { StatusBar,RefreshControl } from 'react-native';
+import { StatusBar,RefreshControl, Image } from 'react-native';
 import { API } from '../../constants/api';
 import { getFeedList, savedFeed, unSavedFeed } from '../../actions';
 import moment from 'moment';
@@ -56,6 +56,7 @@ class HomeScreen extends Component{
 
     loadFeeds(){
         var { token, dispatch } = this.props;
+        this.setState({refreshing: true})
         getFeedList(token, this.state.selectedTab, this.state.searchtag)
         .then(data => {
             dispatch({type: 'setfeed', data: data});
@@ -191,12 +192,12 @@ class HomeScreen extends Component{
                             onRefresh={this.onRefresh.bind(this)}
                         />
                     }>
-                    <List>
+                    <List >
                         {this.state.feedlists && this.state.feedlists[0] != undefined ? this.state.feedlists.map((feed, index) => {
                             return (
                                 <ListItem style={styles.listItem} onPress={() => this.onDetail(feed)} key={index}>
                                     <Body>
-                                        <Thumbnail square source={{uri: API.SERVER + feed.image}} style={styles.itemImage}>
+                                        <Image square source={{uri: API.SERVER + feed.image}} style={styles.itemImage}>
                                             <View style={styles.discountContainer}>
                                                 <Text style={styles.discountPercent}>{feed.discount_percentage}%</Text>
                                                 <Text style={styles.discountText}>OFF</Text>
@@ -207,7 +208,7 @@ class HomeScreen extends Component{
                                                 <Thumbnail  style={styles.saveBtnIcon} square source={require('../../assets/ic_favorite_active.png')}/>
                                                 }
                                             </Button>
-                                        </Thumbnail>
+                                        </Image>
                                         <View style={styles.itemPriceContainer}>
                                            <View style={{flex:1}} >
                                             <Text style={styles.itemPriceText1}>{feed.heading}</Text>
@@ -224,7 +225,9 @@ class HomeScreen extends Component{
                             );
                         })
                         :
-                        null
+                        <View style={{flex:1,justifyContent: 'center',flexDirection: 'column',alignItems: 'center',}} >
+                            <Text style={{textAligh:'center',fontSize: 20,marginTop: 20,}} >Please Wait............</Text>
+                        </View>
                       }
                     </List>
                 </Content>

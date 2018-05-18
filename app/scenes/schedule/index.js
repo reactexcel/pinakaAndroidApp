@@ -55,11 +55,11 @@ class ScheduleScreen extends Component{
     }
 
     showDay(date){
-        return moment(date).format("ddd");
+        return moment(date).add(1,'days').format("ddd");
     }
 
     showDate(date){
-        return moment(date).format("D");
+        return moment(date).add(1,'days').format("D");
     }
 
     showSelectedDate(){
@@ -81,33 +81,21 @@ class ScheduleScreen extends Component{
             case 0:
                 this.setState({
                     time1: !this.state.time1,
-                    time2: false,
-                    time3: false,
-                    time4: false
                 });
                 break;
             case 1:
                 this.setState({
                     time2: !this.state.time2,
-                    time1: false,
-                    time3: false,
-                    time4: false
                 });
                 break;
             case 2:
                 this.setState({
                     time3: !this.state.time3,
-                    time2: false,
-                    time1: false,
-                    time4: false
                 });
                 break;
             case 3:
                 this.setState({
                     time4: !this.state.time4,
-                    time2: false,
-                    time3: false,
-                    time1: false
                 });
                 break;
         }
@@ -161,7 +149,7 @@ class ScheduleScreen extends Component{
                                 <Text style={styles.listItemText}>{API.BOOKINGTIME[0]}</Text>
                             </Body>
                             <Right>
-                                <CheckBox checked={this.state.time1}/>
+                                <CheckBox checked={this.state.time1} onPress={() => this.onValueChanged(0)} />
                             </Right>
                         </ListItem>
                         <ListItem style={styles.listItem} onPress={() => this.onValueChanged(1)}>
@@ -169,7 +157,7 @@ class ScheduleScreen extends Component{
                                 <Text style={styles.listItemText}>{API.BOOKINGTIME[1]}</Text>
                             </Body>
                             <Right>
-                                <CheckBox checked={this.state.time2}/>
+                                <CheckBox checked={this.state.time2} onPress={() => this.onValueChanged(1)} />
                             </Right>
                         </ListItem>
                         <ListItem style={styles.listItem} onPress={() => this.onValueChanged(2)}>
@@ -177,7 +165,7 @@ class ScheduleScreen extends Component{
                                 <Text style={styles.listItemText}>{API.BOOKINGTIME[2]}</Text>
                             </Body>
                             <Right>
-                                <CheckBox checked={this.state.time3}/>
+                                <CheckBox checked={this.state.time3} onPress={() => this.onValueChanged(2)} />
                             </Right>
                         </ListItem>
                         <ListItem style={styles.listItem} onPress={() => this.onValueChanged(3)}>
@@ -185,7 +173,7 @@ class ScheduleScreen extends Component{
                                 <Text style={styles.listItemText}>{API.BOOKINGTIME[3]}</Text>
                             </Body>
                             <Right>
-                                <CheckBox checked={this.state.time4}/>
+                                <CheckBox checked={this.state.time4} onPress={() => this.onValueChanged(3)} />
                             </Right>
                         </ListItem>
                     </List>

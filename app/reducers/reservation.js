@@ -1,5 +1,6 @@
 const initialReservationState = {
-    list: []
+    list: [],
+    history:[]
 };
 
 function reservation(state = initialReservationState, action){
@@ -8,6 +9,11 @@ function reservation(state = initialReservationState, action){
             return {
                 ...state,
                 list: action.data
+            };
+        case 'sethistory':
+            return {
+                ...state,
+                history: action.data
             };
         default:
             return state;

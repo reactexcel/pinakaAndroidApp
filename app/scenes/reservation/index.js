@@ -23,7 +23,7 @@ import styles from './styles';
 import { StatusBar,RefreshControl } from 'react-native';
 import moment from 'moment';
 import { API } from '../../constants/api';
-import { getReservation } from '../../actions';
+import { getReservation, getAllReservation } from '../../actions';
 
 class ReservationScreen extends Component{
     static navigationOptions = {
@@ -43,9 +43,11 @@ class ReservationScreen extends Component{
 
     loadReservation(){
         var { token, dispatch } = this.props;
-        getReservation(token, 0)
+        getReservation(token,0)
         .then(data => {
-            console.log(data,'checking reservation data')
+            console.log('*************************')
+            console.log(data)
+            console.log('*************************')
             dispatch({type: 'setreservation', data: data});
             this.setState({
                 refreshing: false
@@ -57,6 +59,7 @@ class ReservationScreen extends Component{
             });
         });
     }
+
 
     onRefresh(){
         this.setState({
@@ -75,12 +78,15 @@ class ReservationScreen extends Component{
     }
 
     isActive(reservation){
-        var bookingtime = (new Date(reservation.booking_time)).getTime();
-        var now = (new Date()).getTime();
-        if(bookingtime - now > 0){
+        var diff = moment(reservation.booking_time).diff(moment(),'days');
+        if(diff <= 0){
+            if(diff == 0 && reservation.status == 0){
+                return true;
+            } else{
+                return false;
+            }
+        }else if(diff > 0) {
             return true;
-        }else{
-            return false;
         }
     }
 
@@ -92,7 +98,7 @@ class ReservationScreen extends Component{
 
     render(){
         StatusBar.setBarStyle('light-contnet');
-        console.log('11111111111111111111',this.props, '111111111111111')
+        console.log('11111111111111111111',this.props.history, '111111111111111')
         return (
             <Container style={styles.container}>
                 <Header style={styles.header}>
@@ -158,7 +164,7 @@ class ReservationScreen extends Component{
                                         <Body>
                                             <Text style={styles.itemTitle}>{reservation.feed_id.heading}</Text>
                                             <Text style={styles.itemLocationText}>Boronia St & Anzac Parade, NSW 2033</Text>
-                                            <Text style={styles.itemTime1Text}>Received:   {moment(reservation.booking_time).format('D/MM/YYYY')} {this.showBookingTime(reservation)}</Text>
+                                            <Text style={styles.itemTime1Text}>Received:   {moment(reservation.booking_time).format('D/MM/YYYY')} {reservation.showTime}</Text>
                                             <Text style={styles.itemTime1Text}>Total:  <Text style={styles.itemAmountText}>${reservation.purchase_amount.toFixed(2)}</Text></Text>
                                         </Body>
                                     </ListItem>
@@ -178,7 +184,7 @@ class ReservationScreen extends Component{
 
 const mapStateToProps = state => ({
     token: state.user.token,
-    reservationlist: state.reservation.list
+    reservationlist: state.reservation.list,
 });
 
 

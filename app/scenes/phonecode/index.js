@@ -80,6 +80,13 @@ class PhoneCodeScreen extends Component{
                                 errorText: 'Invalid code. Please try again.'
                             });
                             break;
+                        case API.RESPONSE.VERIFYCODE.EMPTYCODE:
+                            this.setState({
+                                isLoading: false,
+                                isError: true,
+                                errorText: 'Plase Check your phone Number.'
+                            });
+                            break;
                         default:
                             this.setState({
                                 isLoading: false,

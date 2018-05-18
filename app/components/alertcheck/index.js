@@ -44,6 +44,8 @@ class AlertCheck extends Component{
 
         if(ret != ''){
             ret  = ret.substring(0,ret.length -1);
+        } else {
+            ret = '5aaa09629f10521eb7f0f591,1'
         }
 
         this.props.onDone(ret);

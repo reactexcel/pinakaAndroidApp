@@ -71,9 +71,11 @@ class ProfileScreen extends Component{
     showInterest(){
         var interests = this.props.user.interests;
         var ret = '';
-        if(interests != undefined && interests[0] != null){
+        if(interests != undefined && interests[0] != null ){
             for(var i = 0; i < interests.length; i++){
-                ret +=interests[i].id.name + ", "
+                if(interests[i].id.name != undefined){
+                    ret +=interests[i].id.name + ", "
+                }
             }
         }
 
@@ -130,7 +132,7 @@ class ProfileScreen extends Component{
                     }>
                     <Body>
                         <Thumbnail source={require('../../assets/profile.png')} style={styles.image}/>
-                        <Text style={styles.basicText}>{this.props.user.name}, {this.showAge()}</Text>
+                        <Text style={styles.basicText}>{this.props.user.name}</Text>
                         <Text style={styles.locationText}>Berlin, Germany</Text>
                     </Body>
                     {this.showInterest().length > 0?

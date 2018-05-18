@@ -62,12 +62,12 @@ class FacebookSignupScreen extends Component{
       const { user } = this.props.navigation.state.params;
       console.log(user,'facebookpage');
       this.setState({
-          email:user.email,
-          password:user.id,
-          birthday:new Date(user.birthday),
-          gender:user.gender == 'male' ? false : true,
-          name:user.username,
-          id:user.id
+          email:user.email?user.email:'',
+          password:user.id?user.id:'123',
+          birthday:user.birthday?new Date(user.birthday):new Date(), 
+          gender:user.gender?user.gender == 'male' ? false : true:true,
+          name:user.username?user.username:'',
+          id:user.id?user.id:''
         });
     }
 
