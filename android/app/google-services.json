@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "344292818747",
+    "firebase_url": "https://pinaka-dfaf9.firebaseio.com",
+    "project_id": "pinaka-dfaf9",
+    "storage_bucket": "pinaka-dfaf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344292818747:android:0addd9d5a115f3e6",
+        "android_client_info": {
+          "package_name": "com.pinaka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344292818747-8r1fhbjg14rgsahc9b8bb20s5s5fvbjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pinaka",
+            "certificate_hash": "353f0999630c04bee641af3d05ee66642366c18f"
+          }
+        },
+        {
+          "client_id": "344292818747-g7hjpt9s1ol0pan105te69viltc9ee4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFnCsW3vjWm7M7ay_bxyCJi13Go_QMBDQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344292818747-g7hjpt9s1ol0pan105te69viltc9ee4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

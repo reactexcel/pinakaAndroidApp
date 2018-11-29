@@ -24,7 +24,6 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
-android/
 android/.gradle/*
 android/.gradle/2.14.1/taskArtifacts/cache.properties.lock
 android/.gradle/2.14.1/taskArtifacts/fileHashes.bin
