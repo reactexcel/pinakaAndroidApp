@@ -60,7 +60,6 @@ class FacebookSignupScreen extends Component{
 
     componentWillMount(){
       const { user } = this.props.navigation.state.params;
-      console.log(user,'facebookpage');
       this.setState({
           email:user.email?user.email:'',
           password:user.id?user.id:'123',
@@ -170,7 +169,9 @@ class FacebookSignupScreen extends Component{
                     }
                 })
                 .catch(err => {
+                    console.log(err,'facebook173')
                     this.setState({
+                        isLoading:false,
                         isError: true,
                         errorText: 'Plese check wifi or internet.'
                     });
@@ -269,7 +270,7 @@ class FacebookSignupScreen extends Component{
                             <Label style={styles.formItemLabel}>
                                 EMAIL
                             </Label>
-                            <Input style={styles.formInput} autoCapitalize={false} value={this.state.email} onChangeText={(text) => this.onChangeText('email', text)}/>
+                            <Input style={styles.formInput} value={this.state.email} onChangeText={(text) => this.onChangeText('email', text)}/>
                         </Item>
                         <Grid style={styles.gridFormContainer}>
                             <Col style={styles.birthdayContainer}>
@@ -293,7 +294,7 @@ class FacebookSignupScreen extends Component{
                                             dateText: {
                                                 color: 'white',
                                                 fontFamily: 'Roboto',
-                                                fontWeight: 'normal',
+                                                fontWeight: '400',
                                                 fontSize: 16,
                                                 lineHeight: 33
                                             }

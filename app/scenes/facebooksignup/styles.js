@@ -20,13 +20,13 @@ export default {
     headerBtnText: {
         color: 'white',
         fontFamily: 'Roboto',
-        fontWeight: 'normal'
+        fontWeight: '400'
     },
 
     title: {
         color: 'white',
         fontFamily: 'Roboto',
-        fontWeight: 'medium',
+        fontWeight: '600',
         fontSize: 20,
         lineHeight: 28
     },
@@ -44,7 +44,7 @@ export default {
 
     text: {
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 18,
         color: 'white',
         textAlign: 'center',
@@ -64,7 +64,7 @@ export default {
 
     formItemLabel: {
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 12,
         color: 'white',
         top: 0,
@@ -79,7 +79,7 @@ export default {
         height: 45,
         paddingRight: 0,
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 16,
         color: 'white'
     },
@@ -124,7 +124,7 @@ export default {
 
     additionalItemText: {
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 14,
         color: 'white'
     },
@@ -168,14 +168,14 @@ export default {
 
     nextBtnText: {
         fontFamily: 'Roboto',
-        fontWeight: 'medium',
+        fontWeight: '600',
         fontSize: 18,
         color: 'white'
     },
 
     text1: {
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 14,
         color: 'white',
         marginLeft: 16,
@@ -189,7 +189,7 @@ export default {
         top: 0,
         right: 0,
         fontFamily: 'Roboto',
-        fontWeight: 'normal',
+        fontWeight: '400',
         fontSize: 14,
         color: '#ffa958'
     }

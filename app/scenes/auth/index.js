@@ -95,6 +95,7 @@ class AuthScreen extends Component{
                   user.username = json.name;
                   searchUser(user).then(data => {
                     console.log(data);
+                    console.log('----------------------------------------')
                     if(data.status == 0 ){
                       this.setState({isLoading:false});
                       dispatch(NavigationActions.navigate({routeName: 'facebooksignup', params: {user: user,interest: interest}}));
@@ -134,7 +135,7 @@ class AuthScreen extends Component{
                           }
                       })
                       .catch(err => {
-                          console.log(err);
+                          console.log(err,'facebook138');
                        
                           //hide indicator
                           this.setState({

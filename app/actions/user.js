@@ -51,6 +51,7 @@ function faccebookLogin(email, password){
 }
 
 function emailSignup(params){
+    console.log('chaeck signup')
     console.log(params);
     if(params.interests == undefined){
       params.interests = '59b02c4a5ecd37001fe35074,1';
@@ -90,11 +91,12 @@ function emailSignup(params){
 }
 
 function facebookSignup(params){
+    console.log(params)
     if(params.interests == undefined){
       params.interests = '59b02c4a5ecd37001fe35074,1';
     }
     var formData = new FormData();
-    formData.append('name', params.name != '' ? params.name :'' );
+    formData.append('name', params.name != '' ? params.name :'User' );
     formData.append('email', params.email);
     formData.append('birthday',params.birthday);
     formData.append('zipcode', params.zipcode);
@@ -109,25 +111,30 @@ function facebookSignup(params){
     formData.append('source', 0);
     formData.append('type', 0);
     formData.append('password', params.password);
-
+    
+    console.log('form')
+    console.log(formData);
+    console.log('form')
+    
     return new Promise((resolve, reject) => {
-        fetch(API.SERVER_DEV_URL + 'user/signup_login_fb', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: formData
-        })
-        .then((res) => res.json())
-        .then(data => {
-            console.log("Email Signup API Success", data);
-            resolve(data);
-        })
-        .catch(err => {
-            console.log("Email Signup API Error", err);
-            reject(err);
+        console.log(API.SERVER_DEV_URL + 'user/signup_login_fb','asdasd')
+         fetch(API.SERVER_DEV_URL + 'user/signup_login_fb', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: formData
+            })
+            .then((res) => res.json())
+            .then(data => {
+                console.log("Email Signup API Success", data);
+                resolve(data);
+            })
+            .catch(err => {
+                console.log("Email Signup API Error134555", err);
+                reject(err);
+            });
         });
-    });
 }
 
 function sendCode(phone){
