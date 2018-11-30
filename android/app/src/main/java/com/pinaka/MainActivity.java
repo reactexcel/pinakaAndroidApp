@@ -1,4 +1,4 @@
-package com.pinaka;
+package com.excellence.GrabGC;
 
 import android.content.Intent;
 import com.facebook.react.ReactActivity;

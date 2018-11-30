@@ -1,4 +1,4 @@
-package com.pinaka;
+package com.excellence.GrabGC;
 
 import android.app.Application;
 
@@ -30,7 +30,7 @@ public class MainApplication extends Application implements ShareApplication, Re
 
   @Override
      public String getFileProviderAuthority() {
-            return "com.pinaka.fileprovider";
+            return "com.excellence.GrabGC.fileprovider";
      }
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
